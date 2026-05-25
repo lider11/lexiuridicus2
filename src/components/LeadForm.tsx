@@ -128,7 +128,12 @@ export function LeadForm() {
       </fieldset>
       <label className="check-row">
         <input name="privacy_accepted" required type="checkbox" value="true" />
-        <span>Usaremos esta informacion unicamente para evaluar tu solicitud y contactarte.</span>
+        <span>
+          Acepto el tratamiento de mis datos personales conforme a la{" "}
+          <a href="/politica-de-datos" target="_blank" rel="noreferrer">
+            política de tratamiento de datos
+          </a>.
+        </span>
       </label>
       <button className="button" disabled={isSaving} type="submit">
         {isSaving ? "Enviando..." : "Enviar solicitud"}
