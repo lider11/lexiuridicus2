@@ -1,70 +1,87 @@
 import { NextResponse } from "next/server";
+import { ZodError } from "zod";
 import { query } from "@/lib/db";
 import { isAdminRequest, unauthorized } from "@/lib/auth";
-import { allowedClientStatuses, allowedUrgencies } from "@/lib/constants";
 import { isRateLimited, requestIp } from "@/lib/rateLimit";
-import type { Client, ClientStatus } from "@/types";
+import { LeadSchema, UpdateClientSchema } from "@/lib/validators/client.schema";
+import type { Client } from "@/types";
+
+function validationError(error: unknown) {
+  if (error instanceof ZodError) {
+    const firstError = error.issues[0]?.message || "Datos inválidos.";
+    return NextResponse.json({ error: firstError }, { status: 400 });
+  }
+
+  return NextResponse.json({ error: "Datos inválidos." }, { status: 400 });
+}
+
+function serverError(context: string, error: unknown) {
+  console.error(context, error);
+
+  return NextResponse.json(
+    { error: "Ocurrió un error interno. Intenta nuevamente." },
+    { status: 500 }
+  );
+}
 
 export async function GET(request: Request) {
   if (!isAdminRequest(request)) {
     return unauthorized();
   }
 
-  const clients = await query<Client[]>(
-    `SELECT id, full_name, company, role, email, phone, legal_need, business_goal, shareholder_context, urgency, status,
-       privacy_accepted, notes, internal_notes, created_at
-     FROM clients
-     ORDER BY created_at DESC`
-  );
+  try {
+    const clients = await query<Client[]>(
+      `SELECT id, full_name, company, role, email, phone, legal_need, business_goal, shareholder_context, urgency, status,
+         privacy_accepted, notes, internal_notes, created_at
+       FROM clients
+       ORDER BY created_at DESC`
+    );
 
-  return NextResponse.json({ clients });
+    return NextResponse.json({ clients });
+  } catch (error) {
+    return serverError("CLIENTS_GET_ERROR", error);
+  }
 }
 
 export async function POST(request: Request) {
   if (isRateLimited(`lead:${requestIp(request)}`, 6, 60_000)) {
-    return NextResponse.json({ error: "Demasiados intentos. Intenta de nuevo en un minuto." }, { status: 429 });
-  }
-
-  const body = await request.json();
-  const fullName = String(body.full_name || "").trim();
-  const company = String(body.company || "").trim();
-  const role = String(body.role || "").trim();
-  const email = String(body.email || "").trim();
-  const phone = String(body.phone || "").trim();
-  const legalNeed = String(body.legal_need || "").trim();
-  const businessGoal = String(body.business_goal || "").trim();
-  const shareholderContext = String(body.shareholder_context || "").trim();
-  const urgency = allowedUrgencies.includes(body.urgency) ? body.urgency : "media";
-  const notes = String(body.notes || "").trim();
-  const privacyAccepted = Boolean(body.privacy_accepted);
-
-  if (!fullName || !company || !role || !email || !phone || !legalNeed || !businessGoal || !privacyAccepted) {
     return NextResponse.json(
-      { error: "Nombre, empresa, cargo, contacto, servicio, objetivo y autorizacion son obligatorios." },
-      { status: 400 }
+      { error: "Demasiados intentos. Intenta de nuevo en un minuto." },
+      { status: 429 }
     );
   }
 
-  await query(
-    `INSERT INTO clients
-       (full_name, company, role, email, phone, legal_need, business_goal, shareholder_context, urgency, privacy_accepted, notes)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-      fullName,
-      company,
-      role,
-      email,
-      phone,
-      legalNeed,
-      businessGoal,
-      shareholderContext || null,
-      urgency,
-      privacyAccepted,
-      notes || null,
-    ]
-  );
+  try {
+    const body = await request.json();
+    const lead = LeadSchema.parse(body);
 
-  return NextResponse.json({ ok: true }, { status: 201 });
+    await query(
+      `INSERT INTO clients
+         (full_name, company, role, email, phone, legal_need, business_goal, shareholder_context, urgency, privacy_accepted, notes)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        lead.full_name,
+        lead.company,
+        lead.role,
+        lead.email,
+        lead.phone,
+        lead.legal_need,
+        lead.business_goal,
+        lead.shareholder_context || null,
+        lead.urgency,
+        lead.privacy_accepted,
+        lead.notes || null,
+      ]
+    );
+
+    return NextResponse.json({ ok: true }, { status: 201 });
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return validationError(error);
+    }
+
+    return serverError("CLIENT_CREATE_ERROR", error);
+  }
 }
 
 export async function PATCH(request: Request) {
@@ -72,30 +89,41 @@ export async function PATCH(request: Request) {
     return unauthorized();
   }
 
-  const body = await request.json();
-  const id = Number(body.id);
-  const status = body.status ? (String(body.status) as ClientStatus) : undefined;
-  const internalNotes = typeof body.internal_notes === "string" ? body.internal_notes.trim() : undefined;
+  try {
+    const body = await request.json();
+    const payload = UpdateClientSchema.parse(body);
 
-  if (!id) {
-    return NextResponse.json({ error: "Cliente invalido." }, { status: 400 });
+    if (payload.status && payload.internal_notes !== undefined) {
+      await query("UPDATE clients SET status = ?, internal_notes = ? WHERE id = ?", [
+        payload.status,
+        payload.internal_notes || null,
+        payload.id,
+      ]);
+    } else if (payload.status) {
+      await query("UPDATE clients SET status = ? WHERE id = ?", [
+        payload.status,
+        payload.id,
+      ]);
+    } else if (payload.internal_notes !== undefined) {
+      await query("UPDATE clients SET internal_notes = ? WHERE id = ?", [
+        payload.internal_notes || null,
+        payload.id,
+      ]);
+    } else {
+      return NextResponse.json(
+        { error: "No hay cambios para guardar." },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return validationError(error);
+    }
+
+    return serverError("CLIENT_UPDATE_ERROR", error);
   }
-
-  if (status && !allowedClientStatuses.includes(status)) {
-    return NextResponse.json({ error: "Estado invalido." }, { status: 400 });
-  }
-
-  if (status && internalNotes !== undefined) {
-    await query("UPDATE clients SET status = ?, internal_notes = ? WHERE id = ?", [status, internalNotes || null, id]);
-  } else if (status) {
-    await query("UPDATE clients SET status = ? WHERE id = ?", [status, id]);
-  } else if (internalNotes !== undefined) {
-    await query("UPDATE clients SET internal_notes = ? WHERE id = ?", [internalNotes || null, id]);
-  } else {
-    return NextResponse.json({ error: "No hay cambios para guardar." }, { status: 400 });
-  }
-
-  return NextResponse.json({ ok: true });
 }
 
 export async function DELETE(request: Request) {
@@ -103,14 +131,18 @@ export async function DELETE(request: Request) {
     return unauthorized();
   }
 
-  const { searchParams } = new URL(request.url);
-  const id = Number(searchParams.get("id"));
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = Number(searchParams.get("id"));
 
-  if (!id) {
-    return NextResponse.json({ error: "Cliente invalido." }, { status: 400 });
+    if (!Number.isInteger(id) || id <= 0) {
+      return NextResponse.json({ error: "Cliente inválido." }, { status: 400 });
+    }
+
+    await query("DELETE FROM clients WHERE id = ?", [id]);
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    return serverError("CLIENT_DELETE_ERROR", error);
   }
-
-  await query("DELETE FROM clients WHERE id = ?", [id]);
-
-  return NextResponse.json({ ok: true });
 }
