@@ -4,7 +4,12 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { BlogPost } from "@/types";
 
-const categories = ["Todos", "Tradicion de acciones", "Imagen empresarial", "Gobierno corporativo"];
+const categories = [
+  "Todos",
+  "Tradicion de acciones",
+  "Imagen empresarial",
+  "Gobierno corporativo",
+];
 
 function readingMinutes(content: string) {
   const words = content.trim().split(/\s+/).filter(Boolean).length;
@@ -15,13 +20,20 @@ export function BlogFilterGrid({ posts }: { posts: BlogPost[] }) {
   const [activeCategory, setActiveCategory] = useState("Todos");
 
   const filteredPosts = useMemo(
-    () => posts.filter((post) => activeCategory === "Todos" || post.category === activeCategory),
-    [activeCategory, posts]
+    () =>
+      posts.filter(
+        (post) =>
+          activeCategory === "Todos" || post.category === activeCategory,
+      ),
+    [activeCategory, posts],
   );
 
   return (
     <div className="blog-browser">
-      <div className="category-filter" aria-label="Filtrar articulos por categoria">
+      <div
+        className="category-filter"
+        aria-label="Filtrar articulos por categoria"
+      >
         {categories.map((category) => (
           <button
             aria-pressed={activeCategory === category}
@@ -42,13 +54,20 @@ export function BlogFilterGrid({ posts }: { posts: BlogPost[] }) {
               </div>
               <div className="article-meta compact-meta">
                 <span>{post.author}</span>
-                <span>{post.published_at ? new Date(post.published_at).toLocaleDateString("es-CO") : "Sin fecha"}</span>
+                <span>
+                  {post.published_at
+                    ? new Date(post.published_at).toLocaleDateString("es-CO")
+                    : "Sin fecha"}
+                </span>
                 <span>{readingMinutes(post.content)} min de lectura</span>
               </div>
               <h2>{post.title}</h2>
               <p>{post.excerpt}</p>
               <div className="blog-card-footer">
-                <Link className="ghost-button compact-button" href={`/blog/${post.slug}`}>
+                <Link
+                  className="ghost-button compact-button"
+                  href={`/blog/${post.slug}`}
+                >
                   Leer articulo
                 </Link>
               </div>

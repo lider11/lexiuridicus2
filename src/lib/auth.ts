@@ -4,7 +4,9 @@ export function isAdminRequest(request: Request) {
   const configuredToken = process.env.ADMIN_TOKEN;
   const providedToken = request.headers.get("x-admin-token");
 
-  return Boolean(configuredToken && providedToken && providedToken === configuredToken);
+  return Boolean(
+    configuredToken && providedToken && providedToken === configuredToken,
+  );
 }
 
 export function unauthorized() {

@@ -29,23 +29,48 @@ export function Footer() {
         <div>
           <h3>Redes sociales</h3>
           <div className="social-links">
-            <a href="https://www.linkedin.com" rel="noreferrer" target="_blank" aria-label="LinkedIn">
+            <a
+              href="https://www.linkedin.com"
+              rel="noreferrer"
+              target="_blank"
+              aria-label="LinkedIn"
+            >
               <span aria-hidden="true">in</span>
               LinkedIn
             </a>
-            <a href="https://www.instagram.com" rel="noreferrer" target="_blank" aria-label="Instagram">
+            <a
+              href="https://www.instagram.com"
+              rel="noreferrer"
+              target="_blank"
+              aria-label="Instagram"
+            >
               <span aria-hidden="true">ig</span>
               Instagram
             </a>
-            <a href="https://www.facebook.com" rel="noreferrer" target="_blank" aria-label="Facebook">
+            <a
+              href="https://www.facebook.com"
+              rel="noreferrer"
+              target="_blank"
+              aria-label="Facebook"
+            >
               <span aria-hidden="true">f</span>
               Facebook
             </a>
-            <a href="https://www.pinterest.com" rel="noreferrer" target="_blank" aria-label="Pinterest">
+            <a
+              href="https://www.pinterest.com"
+              rel="noreferrer"
+              target="_blank"
+              aria-label="Pinterest"
+            >
               <span aria-hidden="true">p</span>
               Pinterest
             </a>
-            <a href="https://www.tiktok.com" rel="noreferrer" target="_blank" aria-label="TikTok">
+            <a
+              href="https://www.tiktok.com"
+              rel="noreferrer"
+              target="_blank"
+              aria-label="TikTok"
+            >
               <span aria-hidden="true">tt</span>
               TikTok
             </a>

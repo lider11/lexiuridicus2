@@ -18,8 +18,12 @@ export function Header() {
         <Link href="/#para-quien">Para quien es</Link>
         <Link href="/blog">Blog</Link>
         <span className="nav-divider" aria-hidden="true" />
-        <Link className="nav-admin" href="/admin">Admin</Link>
-        <Link className="nav-cta" href="/#consulta">Solicitar diagnostico</Link>
+        <Link className="nav-admin" href="/admin">
+          Admin
+        </Link>
+        <Link className="nav-cta" href="/#consulta">
+          Solicitar diagnostico
+        </Link>
       </nav>
     </header>
   );

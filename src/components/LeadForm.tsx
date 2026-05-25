@@ -41,7 +41,9 @@ export function LeadForm() {
     }
 
     form.reset();
-    setMessage("Solicitud recibida. Revisaremos tu caso empresarial y te contactaremos pronto.");
+    setMessage(
+      "Solicitud recibida. Revisaremos tu caso empresarial y te contactaremos pronto.",
+    );
   }
 
   return (
@@ -54,7 +56,12 @@ export function LeadForm() {
         </label>
         <label>
           Correo
-          <input name="email" required type="email" placeholder="contacto@empresa.com" />
+          <input
+            name="email"
+            required
+            type="email"
+            placeholder="contacto@empresa.com"
+          />
         </label>
         <label>
           Telefono
@@ -70,14 +77,22 @@ export function LeadForm() {
         </label>
         <label>
           Cargo
-          <input name="role" required placeholder="Gerente, socio, fundador..." />
+          <input
+            name="role"
+            required
+            placeholder="Gerente, socio, fundador..."
+          />
         </label>
         <label>
           Socios o accionistas
           <select name="shareholder_context" defaultValue="">
             <option value="">Prefiero explicarlo en el mensaje</option>
-            <option value="Si tiene socios o accionistas">Si tiene socios o accionistas</option>
-            <option value="No tiene socios o accionistas">No tiene socios o accionistas</option>
+            <option value="Si tiene socios o accionistas">
+              Si tiene socios o accionistas
+            </option>
+            <option value="No tiene socios o accionistas">
+              No tiene socios o accionistas
+            </option>
             <option value="No estoy seguro">No estoy seguro</option>
           </select>
         </label>
@@ -107,23 +122,36 @@ export function LeadForm() {
             <option disabled value="">
               Que necesita resolver la empresa?
             </option>
-            <option value="Ordenar titularidad accionaria">Ordenar titularidad accionaria</option>
-            <option value="Prepararse para inversionistas">Prepararse para inversionistas</option>
-            <option value="Definir reglas de decision">Definir reglas de decision</option>
-            <option value="Revisar estructura actual">Revisar estructura actual</option>
+            <option value="Ordenar titularidad accionaria">
+              Ordenar titularidad accionaria
+            </option>
+            <option value="Prepararse para inversionistas">
+              Prepararse para inversionistas
+            </option>
+            <option value="Definir reglas de decision">
+              Definir reglas de decision
+            </option>
+            <option value="Revisar estructura actual">
+              Revisar estructura actual
+            </option>
           </select>
         </label>
         <label>
           Nivel de prioridad
           <select name="urgency" defaultValue="media">
             <option value="baja">Estamos explorando</option>
-            <option value="media">Queremos ordenar en las proximas semanas</option>
+            <option value="media">
+              Queremos ordenar en las proximas semanas
+            </option>
             <option value="alta">Necesitamos actuar pronto</option>
           </select>
         </label>
         <label>
           Detalles
-          <textarea name="notes" placeholder="Describe brevemente la situacion actual de la empresa" />
+          <textarea
+            name="notes"
+            placeholder="Describe brevemente la situacion actual de la empresa"
+          />
         </label>
       </fieldset>
       <label className="check-row">
@@ -132,7 +160,8 @@ export function LeadForm() {
           Acepto el tratamiento de mis datos personales conforme a la{" "}
           <a href="/politica-de-datos" target="_blank" rel="noreferrer">
             política de tratamiento de datos
-          </a>.
+          </a>
+          .
         </span>
       </label>
       <button className="button" disabled={isSaving} type="submit">

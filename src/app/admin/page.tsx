@@ -9,7 +9,10 @@ export default function AdminPage() {
         <div className="section-heading">
           <span className="eyebrow">Administracion</span>
           <h1>Panel Lexiuridicus</h1>
-          <p>Gestiona solicitudes, estados, notas internas, exportaciones y contenido juridico desde un mismo lugar.</p>
+          <p>
+            Gestiona solicitudes, estados, notas internas, exportaciones y
+            contenido juridico desde un mismo lugar.
+          </p>
         </div>
       </section>
       <AdminDashboard />

@@ -24,3 +24,4 @@ Sitio web corporativo y panel administrativo para promoción de servicios juríd
 
 ```bash
 npm install
+```

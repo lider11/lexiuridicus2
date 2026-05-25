@@ -20,7 +20,7 @@ function serverError(context: string, error: unknown) {
 
   return NextResponse.json(
     { error: "Ocurrió un error interno. Intenta nuevamente." },
-    { status: 500 }
+    { status: 500 },
   );
 }
 
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       `SELECT id, full_name, company, role, email, phone, legal_need, business_goal, shareholder_context, urgency, status,
          privacy_accepted, notes, internal_notes, created_at
        FROM clients
-       ORDER BY created_at DESC`
+       ORDER BY created_at DESC`,
     );
 
     return NextResponse.json({ clients });
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   if (isRateLimited(`lead:${requestIp(request)}`, 6, 60_000)) {
     return NextResponse.json(
       { error: "Demasiados intentos. Intenta de nuevo en un minuto." },
-      { status: 429 }
+      { status: 429 },
     );
   }
 
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
         lead.urgency,
         lead.privacy_accepted,
         lead.notes || null,
-      ]
+      ],
     );
 
     return NextResponse.json({ ok: true }, { status: 201 });
@@ -94,11 +94,10 @@ export async function PATCH(request: Request) {
     const payload = UpdateClientSchema.parse(body);
 
     if (payload.status && payload.internal_notes !== undefined) {
-      await query("UPDATE clients SET status = ?, internal_notes = ? WHERE id = ?", [
-        payload.status,
-        payload.internal_notes || null,
-        payload.id,
-      ]);
+      await query(
+        "UPDATE clients SET status = ?, internal_notes = ? WHERE id = ?",
+        [payload.status, payload.internal_notes || null, payload.id],
+      );
     } else if (payload.status) {
       await query("UPDATE clients SET status = ? WHERE id = ?", [
         payload.status,
@@ -112,7 +111,7 @@ export async function PATCH(request: Request) {
     } else {
       return NextResponse.json(
         { error: "No hay cambios para guardar." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 

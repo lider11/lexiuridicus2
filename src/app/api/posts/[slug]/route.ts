@@ -13,11 +13,14 @@ export async function GET(_request: Request, { params }: Params) {
      FROM blog_posts
      WHERE slug = ? AND status = 'publicado'
      LIMIT 1`,
-    [slug]
+    [slug],
   );
 
   if (!posts.length) {
-    return NextResponse.json({ error: "Articulo no encontrado." }, { status: 404 });
+    return NextResponse.json(
+      { error: "Articulo no encontrado." },
+      { status: 404 },
+    );
   }
 
   return NextResponse.json({ post: posts[0] });

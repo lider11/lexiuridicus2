@@ -56,7 +56,10 @@ export function CommentSection({ slug }: { slug: string }) {
       <div className="comments-heading">
         <span className="eyebrow">Conversacion</span>
         <h2>Comentarios</h2>
-        <p>Comparte una pregunta o reflexion sobre este tema. Los comentarios se publican despues de revision.</p>
+        <p>
+          Comparte una pregunta o reflexion sobre este tema. Los comentarios se
+          publican despues de revision.
+        </p>
       </div>
 
       <div className="comments-layout">
@@ -66,7 +69,9 @@ export function CommentSection({ slug }: { slug: string }) {
               <article className="comment-card" key={comment.id}>
                 <div className="client-heading">
                   <strong>{comment.author_name}</strong>
-                  <span className="meta">{new Date(comment.created_at).toLocaleDateString("es-CO")}</span>
+                  <span className="meta">
+                    {new Date(comment.created_at).toLocaleDateString("es-CO")}
+                  </span>
                 </div>
                 <p>{comment.comment}</p>
               </article>
@@ -86,11 +91,20 @@ export function CommentSection({ slug }: { slug: string }) {
           </label>
           <label>
             Correo
-            <input name="author_email" required type="email" placeholder="tu@correo.com" />
+            <input
+              name="author_email"
+              required
+              type="email"
+              placeholder="tu@correo.com"
+            />
           </label>
           <label>
             Comentario
-            <textarea name="comment" required placeholder="Escribe tu comentario o pregunta" />
+            <textarea
+              name="comment"
+              required
+              placeholder="Escribe tu comentario o pregunta"
+            />
           </label>
           <button className="button" disabled={isSending} type="submit">
             {isSending ? "Enviando..." : "Enviar comentario"}

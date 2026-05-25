@@ -14,7 +14,7 @@ export async function GET(request: Request) {
        c.comment, c.status, c.created_at
      FROM blog_comments c
      INNER JOIN blog_posts p ON p.id = c.post_id
-     ORDER BY c.created_at DESC`
+     ORDER BY c.created_at DESC`,
   );
 
   return NextResponse.json({ comments });
@@ -30,7 +30,10 @@ export async function PATCH(request: Request) {
   const status = String(body.status || "") as CommentStatus;
 
   if (!id || !allowedCommentStatuses.includes(status)) {
-    return NextResponse.json({ error: "Comentario o estado invalido." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Comentario o estado invalido." },
+      { status: 400 },
+    );
   }
 
   await query("UPDATE blog_comments SET status = ? WHERE id = ?", [status, id]);
@@ -47,7 +50,10 @@ export async function DELETE(request: Request) {
   const id = Number(searchParams.get("id"));
 
   if (!id) {
-    return NextResponse.json({ error: "Comentario invalido." }, { status: 400 });
+    return NextResponse.json(
+      { error: "Comentario invalido." },
+      { status: 400 },
+    );
   }
 
   await query("DELETE FROM blog_comments WHERE id = ?", [id]);
