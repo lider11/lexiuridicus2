@@ -179,8 +179,8 @@ export function LeadForm() {
         {isSaving ? "Enviando..." : "Enviar solicitud"}
       </button>
       <p className="form-trust">
-        Tu informacion se revisa con reserva. Esta solicitud es orientativa y
-        no reemplaza una asesoria juridica personalizada.
+        Tu informacion se revisa con reserva. Esta solicitud es orientativa y no
+        reemplaza una asesoria juridica personalizada.
       </p>
       {message ? <div className="message">{message}</div> : null}
       {error ? <div className="error">{error}</div> : null}

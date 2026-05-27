@@ -1,7 +1,11 @@
 (function () {
   var hiddenPaths = ["/admin"];
 
-  if (hiddenPaths.some(function (path) { return window.location.pathname.startsWith(path); })) {
+  if (
+    hiddenPaths.some(function (path) {
+      return window.location.pathname.startsWith(path);
+    })
+  ) {
     return;
   }
 
@@ -21,8 +25,7 @@
 
   var flows = {
     acciones: {
-      text:
-        "Si hay dudas sobre titularidad, transferencias o soportes de acciones, conviene revisar Tradicion de acciones.",
+      text: "Si hay dudas sobre titularidad, transferencias o soportes de acciones, conviene revisar Tradicion de acciones.",
       actions: [
         {
           label: "Diagnosticar acciones",
@@ -35,8 +38,7 @@
       ],
     },
     inversionistas: {
-      text:
-        "Si la empresa se prepara para inversionistas, aliados o compradores, conviene revisar imagen empresarial: documentos, narrativa y riesgos visibles.",
+      text: "Si la empresa se prepara para inversionistas, aliados o compradores, conviene revisar imagen empresarial: documentos, narrativa y riesgos visibles.",
       actions: [
         {
           label: "Revisar imagen empresarial",
@@ -49,8 +51,7 @@
       ],
     },
     decisiones: {
-      text:
-        "Si las decisiones dependen de acuerdos informales, conviene revisar gobierno corporativo: roles, actas, reglas y procesos internos.",
+      text: "Si las decisiones dependen de acuerdos informales, conviene revisar gobierno corporativo: roles, actas, reglas y procesos internos.",
       actions: [
         {
           label: "Ordenar decisiones",
@@ -63,8 +64,7 @@
       ],
     },
     diagnostico: {
-      text:
-        "El diagnostico empresarial toma cerca de 2 minutos. Dejas tus datos y recibes una primera orientacion sobre el servicio adecuado.",
+      text: "El diagnostico empresarial toma cerca de 2 minutos. Dejas tus datos y recibes una primera orientacion sobre el servicio adecuado.",
       actions: [
         {
           label: "Solicitar diagnostico",
@@ -77,8 +77,7 @@
       ],
     },
     metodo: {
-      text:
-        "El metodo inicia entendiendo la situacion, luego ubicamos el frente critico, revisamos soportes y definimos una ruta de accion.",
+      text: "El metodo inicia entendiendo la situacion, luego ubicamos el frente critico, revisamos soportes y definimos una ruta de accion.",
       actions: [
         {
           label: "Ver metodo",
@@ -87,8 +86,7 @@
       ],
     },
     blog: {
-      text:
-        "En el blog encuentras guias sobre acciones, inversionistas y gobierno corporativo para preparar mejor tus decisiones.",
+      text: "En el blog encuentras guias sobre acciones, inversionistas y gobierno corporativo para preparar mejor tus decisiones.",
       actions: [
         {
           label: "Ir al blog",
@@ -97,8 +95,7 @@
       ],
     },
     contacto: {
-      text:
-        "Puedes solicitar diagnostico desde el formulario principal o escribir a contacto@lexiuridicus.com.",
+      text: "Puedes solicitar diagnostico desde el formulario principal o escribir a contacto@lexiuridicus.com.",
       actions: [
         {
           label: "Ir al formulario",
@@ -201,7 +198,11 @@
       return flows.metodo;
     }
 
-    if (value.includes("blog") || value.includes("articulo") || value.includes("guia")) {
+    if (
+      value.includes("blog") ||
+      value.includes("articulo") ||
+      value.includes("guia")
+    ) {
       return flows.blog;
     }
 
@@ -214,8 +215,7 @@
     }
 
     return {
-      text:
-        "Puedo ayudarte a escoger una ruta. Dime si tu duda es sobre acciones, inversionistas o decisiones internas.",
+      text: "Puedo ayudarte a escoger una ruta. Dime si tu duda es sobre acciones, inversionistas o decisiones internas.",
       actions: [
         {
           label: "Ver servicios",

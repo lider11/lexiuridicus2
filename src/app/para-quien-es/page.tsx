@@ -162,7 +162,9 @@ export default function ParaQuienEsPage() {
       <section className="section final-cta">
         <div>
           <span className="eyebrow">Siguiente paso</span>
-          <h2>Si te reconoces en uno de estos casos, empecemos por diagnosticar.</h2>
+          <h2>
+            Si te reconoces en uno de estos casos, empecemos por diagnosticar.
+          </h2>
           <p>
             Te orientamos sobre que servicio conviene priorizar segun la
             situacion actual de la empresa.

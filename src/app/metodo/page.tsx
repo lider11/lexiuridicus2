@@ -153,7 +153,9 @@ export default function MetodoPage() {
       <section className="section final-cta">
         <div>
           <span className="eyebrow">Empezar con orden</span>
-          <h2>Si la empresa tiene decisiones pendientes, primero diagnostica.</h2>
+          <h2>
+            Si la empresa tiene decisiones pendientes, primero diagnostica.
+          </h2>
           <p>
             Te ayudamos a ubicar el frente juridico que requiere atencion antes
             de avanzar.

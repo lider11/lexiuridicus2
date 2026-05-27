@@ -9,8 +9,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: "Lexiuridicus | Derecho corporativo para empresas",
-  description:
-    siteConfig.description,
+  description: siteConfig.description,
   alternates: {
     canonical: "/",
   },

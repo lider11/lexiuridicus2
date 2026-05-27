@@ -21,9 +21,7 @@ export function Header() {
             <Link href="/servicios/tradicion-de-acciones">
               Tradicion de acciones
             </Link>
-            <Link href="/servicios/imagen-empresarial">
-              Imagen empresarial
-            </Link>
+            <Link href="/servicios/imagen-empresarial">Imagen empresarial</Link>
             <Link href="/servicios/gobierno-corporativo">
               Gobierno corporativo
             </Link>

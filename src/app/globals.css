@@ -15,7 +15,8 @@
   --sky: #dbe9ef;
   --success: #266a22;
   --danger: #a54646;
-  --mono: "Ubuntu Mono", "Cascadia Mono", "SFMono-Regular", Consolas,
+  --mono:
+    "Ubuntu Mono", "Cascadia Mono", "SFMono-Regular", Consolas,
     "Liberation Mono", monospace;
   --motion-fast: 160ms;
   --motion-base: 240ms;

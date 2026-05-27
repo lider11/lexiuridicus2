@@ -153,7 +153,10 @@ export default function Home() {
               Resultado: claridad sobre propiedad y transferencias.
             </strong>
 
-            <Link className="related-link" href="/servicios/tradicion-de-acciones">
+            <Link
+              className="related-link"
+              href="/servicios/tradicion-de-acciones"
+            >
               Ver pagina del servicio
             </Link>
 
@@ -243,7 +246,10 @@ export default function Home() {
 
             <strong>Resultado: decisiones más ordenadas y verificables.</strong>
 
-            <Link className="related-link" href="/servicios/gobierno-corporativo">
+            <Link
+              className="related-link"
+              href="/servicios/gobierno-corporativo"
+            >
               Ver pagina del servicio
             </Link>
 
