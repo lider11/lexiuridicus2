@@ -1,6 +1,9 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { AdminLogin } from "@/components/admin/AdminLogin";
+import { AdminTabs } from "@/components/admin/AdminTabs";
+import type { AdminTab } from "@/components/admin/admin.types";
 import type {
   BlogComment,
   BlogPost,
@@ -26,9 +29,7 @@ export function AdminDashboard() {
   const [draftNotes, setDraftNotes] = useState<Record<number, string>>({});
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState<
-    "clientes" | "blog" | "comentarios"
-  >("clientes");
+  const [activeTab, setActiveTab] = useState<AdminTab>("clientes");
   const [statusFilter, setStatusFilter] = useState<ClientStatus | "todos">(
     "todos",
   );
@@ -432,67 +433,20 @@ export function AdminDashboard() {
   return (
     <div className="admin-workspace">
       {!adminToken ? (
-        <section className="admin-panel admin-login">
-          <div>
-            <span className="eyebrow">Acceso interno</span>
-            <h2>Ingresa al panel administrativo</h2>
-            <p>
-              Usa el token configurado en el archivo `.env` para proteger
-              clientes, blog y comentarios.
-            </p>
-          </div>
-          <form className="form-grid" onSubmit={loginAdmin}>
-            <label>
-              Token de administrador
-              <input
-                onChange={(event) => setTokenInput(event.target.value)}
-                placeholder="ADMIN_TOKEN"
-                type="password"
-                value={tokenInput}
-              />
-            </label>
-            <button className="button" type="submit">
-              Entrar al panel
-            </button>
-          </form>
-        </section>
+        <AdminLogin
+          tokenInput={tokenInput}
+          onTokenInputChange={setTokenInput}
+          onSubmit={loginAdmin}
+        />
       ) : null}
 
       {adminToken ? (
         <>
-          <div
-            className="tabbar"
-            role="tablist"
-            aria-label="Secciones de administracion"
-          >
-            <button
-              aria-selected={activeTab === "clientes"}
-              className="tab-button"
-              onClick={() => setActiveTab("clientes")}
-              type="button"
-            >
-              Clientes
-            </button>
-            <button
-              aria-selected={activeTab === "blog"}
-              className="tab-button"
-              onClick={() => setActiveTab("blog")}
-              type="button"
-            >
-              Blog
-            </button>
-            <button
-              aria-selected={activeTab === "comentarios"}
-              className="tab-button"
-              onClick={() => setActiveTab("comentarios")}
-              type="button"
-            >
-              Comentarios
-            </button>
-            <button className="tab-button" onClick={logoutAdmin} type="button">
-              Salir
-            </button>
-          </div>
+          <AdminTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            onLogout={logoutAdmin}
+          />
 
           {error ? <div className="error">{error}</div> : null}
           {message ? <div className="message">{message}</div> : null}
