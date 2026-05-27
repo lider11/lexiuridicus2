@@ -1,6 +1,12 @@
 import { query } from "@/lib/db";
 import { isAdminRequest, unauthorized } from "@/lib/auth";
-import { badRequest, created, ok, serverError, validationError } from "@/lib/api-response";
+import {
+  badRequest,
+  created,
+  ok,
+  serverError,
+  validationError,
+} from "@/lib/api-response";
 import {
   CreatePostSchema,
   DeletePostSchema,
