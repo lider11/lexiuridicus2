@@ -11,10 +11,14 @@ export const metadata: Metadata = {
   title: "Blog Lexiuridicus | Biblioteca empresarial",
   description:
     "Guias sobre tradicion de acciones, imagen empresarial y gobierno corporativo para empresarios y sociedades.",
+  alternates: {
+    canonical: "/blog",
+  },
   openGraph: {
     title: "Blog Lexiuridicus | Biblioteca empresarial",
     description:
       "Contenido practico para ordenar sociedades, acciones y confianza corporativa.",
+    url: "/blog",
     type: "website",
   },
 };

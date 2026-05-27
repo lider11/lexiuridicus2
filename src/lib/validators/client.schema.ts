@@ -59,9 +59,12 @@ export const LeadSchema = z.object({
     .optional()
     .or(z.literal("")),
 
-  privacy_accepted: z.literal(true, {
-    message: "Debes aceptar el tratamiento de la información.",
-  }),
+  privacy_accepted: z.preprocess(
+    (value) => value === true || value === "true",
+    z.literal(true, {
+      message: "Debes aceptar el tratamiento de la información.",
+    }),
+  ),
 });
 
 export type LeadInput = z.infer<typeof LeadSchema>;
@@ -69,7 +72,7 @@ export type LeadInput = z.infer<typeof LeadSchema>;
 export const UpdateClientSchema = z.object({
   id: z.coerce.number().int().positive("Cliente inválido."),
 
-  status: z.enum(["nuevo", "contactado", "en_revision", "cerrado"]).optional(),
+  status: z.enum(["nuevo", "contactado", "en_proceso", "cerrado"]).optional(),
 
   internal_notes: z
     .string()

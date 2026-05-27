@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+import { Chatbot } from "@/components/Chatbot";
 import { Footer } from "@/components/Footer";
+import { StructuredData } from "@/components/StructuredData";
+import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: "Lexiuridicus | Derecho corporativo para empresas",
   description:
-    "Diagnostico y asesoria en tradicion de acciones, imagen empresarial y gobierno corporativo para empresas.",
+    siteConfig.description,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Lexiuridicus | Derecho corporativo para empresas",
-    description:
-      "Orden juridico corporativo para empresas que buscan claridad ante socios, administradores e inversionistas.",
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    locale: "es_CO",
     type: "website",
   },
 };
@@ -20,10 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es-CO">
       <body>
+        <StructuredData />
         {children}
         <Footer />
+        <Chatbot />
+        <Script src="/chatbot.js" strategy="afterInteractive" />
       </body>
     </html>
   );

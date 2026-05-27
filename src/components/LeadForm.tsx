@@ -24,26 +24,37 @@ export function LeadForm() {
     setError("");
 
     const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form));
+    const formData = new FormData(form);
+    const data = {
+      ...Object.fromEntries(formData),
+      privacy_accepted: formData.get("privacy_accepted") === "true",
+    };
 
-    const response = await fetch("/api/clients", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    try {
+      const response = await fetch("/api/clients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    setIsSaving(false);
+      if (!response.ok) {
+        const payload = await response.json();
+        setError(payload.error || "No se pudo registrar el cliente.");
+        return;
+      }
 
-    if (!response.ok) {
-      const payload = await response.json();
-      setError(payload.error || "No se pudo registrar el cliente.");
-      return;
+      form.reset();
+      setSelectedService("");
+      setMessage(
+        "Solicitud recibida. Revisaremos tu caso empresarial y te contactaremos pronto.",
+      );
+    } catch {
+      setError(
+        "No se pudo enviar la solicitud. Revisa tu conexion e intenta nuevamente.",
+      );
+    } finally {
+      setIsSaving(false);
     }
-
-    form.reset();
-    setMessage(
-      "Solicitud recibida. Revisaremos tu caso empresarial y te contactaremos pronto.",
-    );
   }
 
   return (

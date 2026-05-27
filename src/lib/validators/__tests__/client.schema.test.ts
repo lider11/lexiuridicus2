@@ -55,4 +55,21 @@ describe("LeadSchema", () => {
 
     expect(result.success).toBe(false);
   });
+  it("acepta la autorizacion de privacidad enviada desde FormData", () => {
+    const result = LeadSchema.safeParse({
+      full_name: "Daniel Vergel",
+      company: "Lexiuridicus",
+      role: "Abogado",
+      email: "devergel1980@gmail.com",
+      phone: "3001234567",
+      legal_need: "Gobierno corporativo",
+      business_goal: "Fortalecer estructura societaria",
+      shareholder_context: "",
+      urgency: "alta",
+      notes: "Cliente corporativo",
+      privacy_accepted: "true",
+    });
+
+    expect(result.success).toBe(true);
+  });
 });

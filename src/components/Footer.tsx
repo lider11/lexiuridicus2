@@ -8,23 +8,27 @@ export function Footer() {
           <span>LX</span>
         </span>
         <div>
-          <strong>Lexiuridicus</strong>
-          <p>Derecho corporativo para empresas, socios e inversionistas.</p>
+          <strong>lexiuridicus</strong>
+          <p>Seriedad, claridad y decisiones para empresas en crecimiento.</p>
         </div>
       </div>
 
       <div className="footer-grid">
         <div>
           <h3>Contacto</h3>
-          <p>Direccion: Calle 100 # 15-20, Bogota, Colombia</p>
+          <p>Direccion: Barranquilla, Atlantico, Colombia</p>
           <p>Telefono: +57 300 000 0000</p>
           <p>Correo: contacto@lexiuridicus.com</p>
         </div>
         <div>
           <h3>Servicios</h3>
-          <Link href="/#servicios">Tradicion de acciones</Link>
-          <Link href="/#servicios">Imagen empresarial</Link>
-          <Link href="/#servicios">Gobierno corporativo</Link>
+          <Link href="/servicios/tradicion-de-acciones">
+            Tradicion de acciones
+          </Link>
+          <Link href="/servicios/imagen-empresarial">Imagen empresarial</Link>
+          <Link href="/servicios/gobierno-corporativo">
+            Gobierno corporativo
+          </Link>
         </div>
         <div>
           <h3>Redes sociales</h3>

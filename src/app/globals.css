@@ -4,15 +4,23 @@
   --line: #d8d4c6;
   --paper: #f6f0e4;
   --panel: #ffffff;
-  --brand: #1b6a5b;
-  --brand-strong: #083f3a;
+  --brand: #266a22;
+  --brand-strong: #123a18;
+  --brand-deep: #0a2410;
+  --brand-soft: #d9e6d7;
   --accent: #d0a443;
   --accent-soft: #fff2c9;
-  --mint: #dcefe7;
+  --mint: #d9e6d7;
   --peach: #f4dfcf;
   --sky: #dbe9ef;
-  --success: #2e7d64;
+  --success: #266a22;
   --danger: #a54646;
+  --mono: "Ubuntu Mono", "Cascadia Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+  --motion-slow: 420ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -21,6 +29,42 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chatbotIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body {
@@ -42,6 +86,26 @@ textarea {
   font: inherit;
 }
 
+.button,
+.ghost-button,
+.nav a,
+.service-cta,
+.category-filter button,
+.chatbot-toggle,
+.chatbot-form button,
+.chatbot-message-actions a,
+.chatbot-quick-actions button,
+input,
+select,
+textarea {
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+
 .site-shell {
   min-height: 100vh;
 }
@@ -57,7 +121,7 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 20;
-  box-shadow: 0 14px 34px rgba(8, 63, 58, 0.08);
+  box-shadow: 0 14px 34px rgba(18, 58, 24, 0.08);
 }
 
 .brand {
@@ -76,7 +140,7 @@ textarea {
   border: 1px solid rgba(208, 164, 67, 0.7);
   box-shadow:
     inset 0 -8px 0 rgba(208, 164, 67, 0.18),
-    0 10px 22px rgba(8, 63, 58, 0.16);
+    0 10px 22px rgba(18, 58, 24, 0.16);
   color: white;
   display: inline-flex;
   height: 46px;
@@ -97,7 +161,7 @@ textarea {
 }
 
 .brand-mark span {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--mono);
   font-size: 0.98rem;
   font-weight: 900;
   line-height: 1;
@@ -112,7 +176,7 @@ textarea {
 
 .brand-copy strong {
   color: var(--brand-strong);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--mono);
   font-size: 1.16rem;
   letter-spacing: 0;
 }
@@ -191,6 +255,22 @@ textarea {
   font-weight: 800;
 }
 
+.button:hover,
+.ghost-button:hover,
+.service-cta:hover,
+.chatbot-toggle:hover,
+.chatbot-form button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active,
+.ghost-button:active,
+.service-cta:active,
+.chatbot-toggle:active,
+.chatbot-form button:active {
+  transform: translateY(0);
+}
+
 .ghost-button {
   background: rgba(255, 255, 255, 0.5);
   cursor: pointer;
@@ -198,13 +278,18 @@ textarea {
 }
 
 .hero {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 248, 232, 0.96) 0%,
-    rgba(244, 234, 214, 0.94) 54%,
-    rgba(228, 241, 234, 0.98) 54%,
-    rgba(228, 241, 234, 0.98) 100%
-  );
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10, 36, 16, 0.96) 0%,
+      rgba(18, 58, 24, 0.86) 42%,
+      rgba(38, 106, 34, 0.34) 72%,
+      rgba(10, 36, 16, 0.26) 100%
+    ),
+    url("/images/lexiuridicus-hero-boardroom.png");
+  background-position: center;
+  background-size: cover;
+  color: white;
   display: grid;
   gap: clamp(28px, 5vw, 58px);
   grid-template-columns: minmax(0, 1.06fr) minmax(340px, 0.94fr);
@@ -213,11 +298,13 @@ textarea {
 }
 
 .hero-copy {
+  animation: heroIn var(--motion-slow) var(--ease-out);
   align-self: center;
   max-width: 820px;
 }
 
 .hero h1 {
+  color: #fffaf0;
   font-size: clamp(2.45rem, 5.3vw, 5rem);
   max-width: 900px;
 }
@@ -226,15 +313,35 @@ textarea {
   margin-top: 22px;
 }
 
+.hero-copy p {
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 760px;
+}
+
 .hero-microcopy {
-  color: var(--brand-strong);
+  color: #fff2c9;
   font-size: 0.92rem;
   font-weight: 800;
   margin: 12px 0 0;
 }
 
+.hero-copy .eyebrow {
+  color: #ffe8a3;
+}
+
+.hero-copy .ghost-button {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.34);
+  color: white;
+}
+
+.hero-copy .ghost-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 .eyebrow {
   color: var(--brand-strong);
+  font-family: var(--mono);
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0;
@@ -281,9 +388,9 @@ p {
 }
 
 .trust-row span {
-  background: rgba(255, 242, 201, 0.9);
-  border: 1px solid #e8c96f;
-  color: var(--brand-strong);
+  background: rgba(255, 242, 201, 0.13);
+  border: 1px solid rgba(255, 232, 163, 0.34);
+  color: #fff2c9;
   display: inline-flex;
   font-size: 0.88rem;
   font-weight: 800;
@@ -298,7 +405,7 @@ p {
 }
 
 .service-pills span {
-  background: var(--brand-strong);
+  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: white;
   display: inline-flex;
@@ -309,9 +416,10 @@ p {
 
 .specialty-card {
   align-items: center;
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid rgba(27, 106, 91, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-left: 4px solid var(--accent);
+  backdrop-filter: blur(14px);
   display: flex;
   flex-wrap: wrap;
   gap: 8px 12px;
@@ -321,11 +429,11 @@ p {
 }
 
 .specialty-card strong {
-  color: var(--brand-strong);
+  color: #fff2c9;
 }
 
 .specialty-card span {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.84);
   font-weight: 700;
 }
 
@@ -339,10 +447,23 @@ p {
 }
 
 .intake-panel {
+  animation: heroIn var(--motion-slow) var(--ease-out) 90ms both;
   align-self: center;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px);
   border-color: rgba(208, 164, 67, 0.45);
-  box-shadow: 0 30px 80px rgba(8, 63, 58, 0.18);
+  box-shadow: 0 34px 90px rgba(10, 36, 16, 0.34);
+  color: var(--ink);
   padding: 26px;
+}
+
+.intake-panel h2 {
+  color: var(--brand-strong);
+}
+
+.intake-panel > p {
+  color: var(--muted);
+  font-weight: 700;
 }
 
 .form-note {
@@ -415,6 +536,14 @@ textarea {
   width: 100%;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(38, 106, 34, 0.16);
+  outline: none;
+}
+
 textarea {
   min-height: 112px;
   resize: vertical;
@@ -424,12 +553,259 @@ textarea {
   padding: 64px clamp(18px, 4vw, 56px);
 }
 
+.method-hero {
+  align-items: center;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(10, 36, 16, 0.96) 0%,
+      rgba(18, 58, 24, 0.9) 48%,
+      rgba(208, 164, 67, 0.26) 100%
+    ),
+    url("/images/lexiuridicus-hero-boardroom.png");
+  background-position: center;
+  background-size: cover;
+  color: white;
+  display: grid;
+  gap: clamp(24px, 5vw, 56px);
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  padding: 82px clamp(18px, 4vw, 56px);
+}
+
+.method-hero-copy {
+  display: grid;
+  gap: 18px;
+  max-width: 860px;
+}
+
+.method-hero h1 {
+  color: #fffaf0;
+  font-size: clamp(2.45rem, 5.5vw, 5.2rem);
+}
+
+.method-hero p,
+.method-hero .eyebrow {
+  color: rgba(255, 255, 255, 0.84);
+  font-weight: 700;
+  max-width: 760px;
+}
+
+.method-hero .ghost-button {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.32);
+  color: white;
+}
+
+.method-summary {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(208, 164, 67, 0.52);
+  border-radius: 8px;
+  box-shadow: 0 30px 80px rgba(10, 36, 16, 0.32);
+  display: grid;
+  gap: 14px;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.method-summary h2 {
+  color: var(--brand-strong);
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+}
+
+.method-summary p {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.method-section {
+  background: #fff6e4;
+}
+
+.method-steps {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.method-steps article {
+  background: var(--panel);
+  border: 1px solid rgba(208, 164, 67, 0.36);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(18, 58, 24, 0.07);
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+
+.method-steps span {
+  align-items: center;
+  background: var(--brand-strong);
+  color: white;
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 900;
+  height: 34px;
+  justify-content: center;
+  width: 42px;
+}
+
+.method-steps h3 {
+  color: var(--brand-strong);
+  font-size: 1.18rem;
+}
+
+.method-review {
+  align-items: center;
+  background: var(--mint);
+  display: grid;
+  gap: clamp(24px, 5vw, 58px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.method-review h2 {
+  max-width: 820px;
+}
+
+.review-list {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.review-list span {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(27, 106, 91, 0.18);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  color: var(--brand-strong);
+  font-weight: 800;
+  padding: 15px;
+}
+
+.method-outcome {
+  background: #fbfaf6;
+}
+
+.audience-hero {
+  align-items: center;
+  background:
+    linear-gradient(
+      115deg,
+      rgba(10, 36, 16, 0.96) 0%,
+      rgba(18, 58, 24, 0.88) 48%,
+      rgba(38, 106, 34, 0.45) 100%
+    ),
+    url("/images/lexiuridicus-hero-boardroom.png");
+  background-position: center;
+  background-size: cover;
+  color: white;
+  display: grid;
+  gap: clamp(24px, 5vw, 56px);
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  padding: 82px clamp(18px, 4vw, 56px);
+}
+
+.audience-hero-copy {
+  display: grid;
+  gap: 18px;
+  max-width: 860px;
+}
+
+.audience-hero h1 {
+  color: #fffaf0;
+  font-size: clamp(2.45rem, 5.5vw, 5.2rem);
+}
+
+.audience-hero p,
+.audience-hero .eyebrow {
+  color: rgba(255, 255, 255, 0.84);
+  font-weight: 700;
+  max-width: 760px;
+}
+
+.audience-hero .ghost-button {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.32);
+  color: white;
+}
+
+.audience-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(208, 164, 67, 0.52);
+  border-radius: 8px;
+  box-shadow: 0 30px 80px rgba(10, 36, 16, 0.32);
+  display: grid;
+  gap: 14px;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.audience-card h2 {
+  color: var(--brand-strong);
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
+}
+
+.audience-card p {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.audience-fit {
+  background: #fff6e4;
+}
+
+.audience-fit-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.audience-fit-grid article {
+  background: var(--panel);
+  border: 1px solid rgba(208, 164, 67, 0.36);
+  border-top: 4px solid var(--accent);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(18, 58, 24, 0.07);
+  padding: 20px;
+}
+
+.audience-fit-grid h3 {
+  color: var(--brand-strong);
+  font-size: 1.16rem;
+}
+
+.audience-signals {
+  align-items: center;
+  background: var(--mint);
+  display: grid;
+  gap: clamp(24px, 5vw, 58px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.signal-list {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signal-list span {
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(27, 106, 91, 0.18);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  color: var(--brand-strong);
+  font-weight: 800;
+  padding: 15px;
+}
+
+.audience-services {
+  background: #fbfaf6;
+}
+
 .blog-hero {
   align-items: center;
   background: linear-gradient(
     120deg,
-    #083f3a 0%,
-    #145b51 68%,
+    var(--brand-deep) 0%,
+    var(--brand-strong) 68%,
     #d0a443 68%,
     #f4dfcf 100%
   );
@@ -535,6 +911,21 @@ textarea {
   gap: 8px;
   min-height: 100%;
   padding: 20px;
+  transition:
+    border-color var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-base) var(--ease-out);
+}
+
+.feature:hover,
+.problem-grid div:hover,
+.topic-grid article:hover,
+.method-steps article:hover,
+.audience-fit-grid article:hover,
+.comment-card:hover {
+  border-color: rgba(38, 106, 34, 0.34);
+  box-shadow: 0 18px 42px rgba(18, 58, 24, 0.12);
+  transform: translateY(-3px);
 }
 
 .feature strong {
@@ -559,7 +950,7 @@ textarea {
 }
 
 .service-card-actions {
-  border-top-color: #1b6a5b;
+  border-top-color: var(--brand);
 }
 
 .service-card-image {
@@ -633,7 +1024,12 @@ textarea {
   height: 26px;
   justify-content: center;
   line-height: 1;
+  transition: transform var(--motion-fast) var(--ease-out);
   width: 26px;
+}
+
+.service-cta:hover strong {
+  transform: translateX(2px);
 }
 
 .service-cta:hover {
@@ -689,7 +1085,12 @@ textarea {
 
 .audience-section {
   align-items: center;
-  background: linear-gradient(135deg, #083f3a 0%, #145b51 56%, #1b6a5b 100%);
+  background: linear-gradient(
+    135deg,
+    var(--brand-deep) 0%,
+    var(--brand-strong) 56%,
+    var(--brand) 100%
+  );
   color: white;
   display: grid;
   gap: 28px;
@@ -722,6 +1123,7 @@ textarea {
   background: var(--brand-strong);
   color: white;
   display: inline-flex;
+  font-family: var(--mono);
   font-size: 0.82rem;
   font-weight: 800;
   height: 34px;
@@ -825,6 +1227,12 @@ summary {
   color: white;
 }
 
+.category-filter button:hover {
+  border-color: var(--brand);
+  box-shadow: 0 8px 18px rgba(18, 58, 24, 0.1);
+  transform: translateY(-1px);
+}
+
 .post-card {
   display: grid;
   gap: 12px;
@@ -877,6 +1285,7 @@ summary {
   border: 1px solid var(--line);
   color: var(--muted);
   display: inline-flex;
+  font-family: var(--mono);
   font-size: 0.78rem;
   font-weight: 800;
   padding: 6px 8px;
@@ -1055,11 +1464,13 @@ summary {
 }
 
 .message {
+  animation: messageIn var(--motion-base) var(--ease-out);
   color: var(--success);
   font-weight: 700;
 }
 
 .error {
+  animation: messageIn var(--motion-base) var(--ease-out);
   color: var(--danger);
   font-weight: 700;
 }
@@ -1073,9 +1484,9 @@ summary {
 .article-hero {
   background: linear-gradient(
     135deg,
-    #083f3a 0%,
-    #145b51 58%,
-    #dcefe7 58%,
+    var(--brand-deep) 0%,
+    var(--brand-strong) 58%,
+    var(--mint) 58%,
     #fff8e8 100%
   );
   color: white;
@@ -1248,6 +1659,181 @@ summary {
   gap: 12px;
 }
 
+.sr-only {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.chatbot {
+  bottom: 18px;
+  position: fixed;
+  right: 18px;
+  z-index: 40;
+}
+
+.chatbot-toggle {
+  background: var(--brand-strong);
+  border: 1px solid rgba(208, 164, 67, 0.62);
+  box-shadow: 0 18px 42px rgba(10, 36, 16, 0.28);
+  color: white;
+  cursor: pointer;
+  font-weight: 900;
+  min-height: 46px;
+  padding: 12px 16px;
+}
+
+.chatbot-toggle span {
+  font-family: var(--mono);
+}
+
+.chatbot-panel {
+  animation: chatbotIn var(--motion-base) var(--ease-out);
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(208, 164, 67, 0.48);
+  border-radius: 8px;
+  bottom: 62px;
+  box-shadow: 0 24px 70px rgba(10, 36, 16, 0.28);
+  display: grid;
+  gap: 12px;
+  max-height: min(620px, calc(100vh - 96px));
+  overflow: hidden;
+  padding: 14px;
+  position: absolute;
+  right: 0;
+  width: min(360px, calc(100vw - 36px));
+  transform-origin: bottom right;
+}
+
+.chatbot-panel[hidden] {
+  display: none;
+}
+
+.chatbot-header {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.chatbot-header div {
+  display: grid;
+  gap: 2px;
+}
+
+.chatbot-header strong {
+  color: var(--brand-strong);
+  font-family: var(--mono);
+  font-size: 1rem;
+}
+
+.chatbot-header span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.chatbot-close {
+  align-items: center;
+  background: var(--brand-soft);
+  border: 1px solid rgba(38, 106, 34, 0.2);
+  color: var(--brand-strong);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--mono);
+  font-weight: 900;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.chatbot-messages {
+  display: grid;
+  gap: 10px;
+  max-height: 290px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.chatbot-message {
+  animation: messageIn var(--motion-base) var(--ease-out);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  padding: 10px 12px;
+}
+
+.chatbot-message.bot {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
+}
+
+.chatbot-message.user {
+  background: var(--brand-strong);
+  color: white;
+  margin-left: 34px;
+}
+
+.chatbot-message-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chatbot-message-actions a {
+  background: white;
+  border: 1px solid rgba(38, 106, 34, 0.24);
+  color: var(--brand-strong);
+  display: inline-flex;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 7px 9px;
+}
+
+.chatbot-message-actions a:hover {
+  border-color: var(--accent);
+  color: var(--brand);
+}
+
+.chatbot-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chatbot-quick-actions button {
+  background: #fbfaf6;
+  border: 1px solid var(--line);
+  color: var(--brand-strong);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 8px 10px;
+}
+
+.chatbot-form {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.chatbot-form input {
+  min-height: 42px;
+}
+
+.chatbot-form button {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+  padding: 9px 12px;
+}
+
 @media (max-width: 900px) {
   .topbar {
     align-items: flex-start;
@@ -1281,16 +1867,24 @@ summary {
   }
 
   .hero,
+  .method-hero,
+  .audience-hero,
   .blog-hero,
   .comments-layout,
   .admin-layout,
   .admin-stats,
   .service-guide,
   .footer-grid,
+  .method-review,
+  .audience-signals,
   .split-section,
   .faq-grid,
   .problem-grid,
   .audience-section,
+  .method-steps,
+  .audience-fit-grid,
+  .review-list,
+  .signal-list,
   .topic-grid,
   .feature-grid,
   .stats-grid {
@@ -1302,7 +1896,14 @@ summary {
   }
 
   .hero {
+    background-position: 62% center;
     min-height: auto;
+  }
+
+  .hero-actions .button,
+  .hero-actions .ghost-button {
+    justify-content: center;
+    width: 100%;
   }
 
   fieldset {
@@ -1317,5 +1918,25 @@ summary {
   .final-cta-button {
     justify-content: center;
     width: 100%;
+  }
+
+  .chatbot {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .chatbot-panel {
+    bottom: 58px;
+    width: calc(100vw - 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
   }
 }

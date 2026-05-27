@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { CommentSection } from "@/components/CommentSection";
 import { query } from "@/lib/db";
+import { siteConfig } from "@/lib/site";
 import type { BlogPost } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -42,9 +43,13 @@ export async function generateMetadata({
   return {
     title: `${post.title} | Lexiuridicus`,
     description: post.excerpt,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      url: `/blog/${post.slug}`,
       type: "article",
       publishedTime: post.published_at || undefined,
       authors: [post.author],
@@ -65,9 +70,36 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
+  const articleStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    author: {
+      "@type": "Person",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    datePublished: post.published_at ?? post.created_at,
+    dateModified: post.published_at ?? post.created_at,
+    mainEntityOfPage: `${siteConfig.url}/blog/${post.slug}`,
+    articleSection: post.category,
+    inLanguage: "es-CO",
+  };
+
   return (
     <main className="site-shell">
       <Header />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleStructuredData),
+        }}
+      />
       <section className="article-hero">
         <div>
           <span className="eyebrow">{post.category}</span>

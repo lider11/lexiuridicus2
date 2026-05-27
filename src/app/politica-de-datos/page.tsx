@@ -1,5 +1,14 @@
 import { Header } from "@/components/Header";
 
+export const metadata = {
+  title: "Politica de datos | Lexiuridicus",
+  description:
+    "Politica de tratamiento de datos personales de Lexiuridicus.",
+  alternates: {
+    canonical: "/politica-de-datos",
+  },
+};
+
 export default function PoliticaDeDatosPage() {
   return (
     <main className="site-shell">

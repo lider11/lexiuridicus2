@@ -10,48 +10,51 @@ export default function Home() {
       <section className="hero">
         <div className="hero-copy">
           <div className="eyebrow">
-            Especialistas en empresas, socios e inversionistas
+            Derecho corporativo para empresas con socios e inversionistas
           </div>
 
           <h1>
-            Ordenamos la estructura juridica de tu empresa para crecer con
-            confianza.
+            Ordena la propiedad, las decisiones y la confianza juridica de tu
+            empresa.
           </h1>
 
           <p>
-            Diagnostico y asesoria en tradicion de acciones, imagen empresarial
-            y gobierno corporativo para empresas que buscan claridad ante
-            socios, administradores e inversionistas.
+            Diagnosticamos tradicion de acciones, imagen empresarial y gobierno
+            corporativo para que socios, administradores e inversionistas tengan
+            claridad antes de tomar decisiones importantes.
           </p>
           <div className="service-pills" aria-label="Servicios principales">
-            <span>Tradicion de acciones</span>
-            <span>Imagen empresarial</span>
+            <span>Acciones y socios</span>
             <span>Gobierno corporativo</span>
+            <span>Preparacion para inversionistas</span>
           </div>
           <div className="trust-row" aria-label="Garantias de servicio">
-            <span>Diagnostico inicial</span>
+            <span>Revision inicial orientativa</span>
             <span>Enfoque corporativo</span>
-            <span>Confidencialidad empresarial</span>
+            <span>Confidencialidad</span>
           </div>
 
           <div className="hero-actions">
             <Link className="button" href="#consulta">
-              Revisar mi empresa
+              Solicitar diagnostico empresarial
             </Link>
 
             <Link className="ghost-button" href="#servicios">
-              Ver servicios
+              Ver servicios corporativos
             </Link>
           </div>
 
           <p className="hero-microcopy">
-            Ideal para empresas con socios, accionistas o decisiones internas
-            pendientes de formalizar.
+            Respuesta inicial orientativa. Informacion tratada con
+            confidencialidad.
           </p>
 
           <div className="specialty-card">
             <strong>Especialidad</strong>
-            <span>Sociedades, accionistas y gobierno corporativo.</span>
+            <span>
+              Sociedades, accionistas, organos de decision y documentacion
+              corporativa.
+            </span>
           </div>
         </div>
 
@@ -61,7 +64,7 @@ export default function Home() {
           aria-label="Formulario de consulta"
         >
           <span className="form-note">Tiempo estimado: 2 minutos</span>
-          <h2>Diagnostico empresarial</h2>
+          <h2>Diagnostico Empresarial</h2>
           <p>
             Te responderemos con una primera orientacion sobre el servicio mas
             adecuado para tu empresa.
@@ -150,6 +153,10 @@ export default function Home() {
               Resultado: claridad sobre propiedad y transferencias.
             </strong>
 
+            <Link className="related-link" href="/servicios/tradicion-de-acciones">
+              Ver pagina del servicio
+            </Link>
+
             <Link
               className="related-link"
               href="/blog/por-que-la-tradicion-de-acciones-importa-en-una-sociedad"
@@ -192,6 +199,10 @@ export default function Home() {
               Resultado: mejor preparación frente a inversionistas y aliados.
             </strong>
 
+            <Link className="related-link" href="/servicios/imagen-empresarial">
+              Ver pagina del servicio
+            </Link>
+
             <Link
               className="related-link"
               href="/blog/como-preparar-la-empresa-para-inversionistas"
@@ -232,6 +243,10 @@ export default function Home() {
 
             <strong>Resultado: decisiones más ordenadas y verificables.</strong>
 
+            <Link className="related-link" href="/servicios/gobierno-corporativo">
+              Ver pagina del servicio
+            </Link>
+
             <Link
               className="related-link"
               href="/blog/gobierno-corporativo-para-empresas-en-crecimiento"
@@ -261,6 +276,10 @@ export default function Home() {
             empresarial. Si las decisiones internas no tienen reglas claras,
             empieza por gobierno corporativo.
           </p>
+
+          <Link className="button final-cta-button" href="/metodo">
+            Ver metodo
+          </Link>
         </div>
       </section>
     </main>
