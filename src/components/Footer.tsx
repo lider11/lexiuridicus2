@@ -16,8 +16,11 @@ export function Footer() {
       <div className="footer-grid">
         <div>
           <h3>Contacto</h3>
-          <p>Direccion: Barranquilla, Atlantico, Colombia</p>
-          <p>Telefono: +57 300 000 0000</p>
+          <p>
+            Direccion: Calle 77B No 57- 103 local 1 Barranquilla, Atlantico,
+            Colombia
+          </p>
+          <p>Telefono: +57 3012370047</p>
           <p>Correo: contacto@lexiuridicus.com</p>
         </div>
         <div>
