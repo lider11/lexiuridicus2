@@ -9,41 +9,45 @@ export default function Home() {
       <section className="hero">
         <div className="hero-copy">
           <div className="eyebrow">
-            Especialistas en empresas, socios e inversionistas
+            Para empresas que crecieron mas rapido que sus documentos
           </div>
           <h1>
-            Ordenamos la estructura juridica de tu empresa para crecer con
-            confianza.
+            Si tu empresa crecio, pero sus papeles no, es momento de ordenar su
+            estructura juridica.
           </h1>
           <p>
-            Diagnostico y asesoria en tradicion de acciones, imagen empresarial
-            y gobierno corporativo para empresas que buscan claridad ante
-            socios, administradores e inversionistas.
+            Revisamos la situacion de socios, acciones, actas, decisiones
+            internas y gobierno corporativo para reducir riesgos y preparar la
+            empresa para crecer con seguridad.
           </p>
-          <div className="service-pills" aria-label="Servicios principales">
-            <span>Tradicion de acciones</span>
-            <span>Imagen empresarial</span>
-            <span>Gobierno corporativo</span>
+          <div className="service-pills" aria-label="Problemas frecuentes">
+            <span>Socios sin reglas claras</span>
+            <span>Acciones sin trazabilidad</span>
+            <span>Decisiones informales</span>
           </div>
-          <div className="trust-row" aria-label="Garantias de servicio">
-            <span>Diagnostico inicial</span>
-            <span>Enfoque corporativo</span>
-            <span>Confidencialidad empresarial</span>
+          <div className="trust-row" aria-label="Beneficios">
+            <span>Claridad societaria</span>
+            <span>Menos conflictos</span>
+            <span>Mayor confianza</span>
           </div>
           <div className="hero-actions">
             <Link className="button" href="#consulta">
-              Solicitar diagnostico empresarial
+              Revisar mi empresa
             </Link>
             <Link className="ghost-button" href="#servicios">
-              Ver servicios
+              Que podemos ordenar
             </Link>
           </div>
           <p className="hero-microcopy">
-            Respuesta inicial segun prioridad y servicio requerido.
+            Ideal para empresas con socios, accionistas o decisiones internas
+            pendientes de formalizar.
           </p>
           <div className="specialty-card">
-            <strong>Especialidad</strong>
-            <span>Sociedades, accionistas y gobierno corporativo.</span>
+            <strong>Diagnostico</strong>
+            <span>
+              Detectamos riesgos juridicos antes de que se conviertan en
+              conflictos.
+            </span>
           </div>
         </div>
         <aside
@@ -51,11 +55,11 @@ export default function Home() {
           id="consulta"
           aria-label="Formulario de consulta"
         >
-          <span className="form-note">Tiempo estimado: 2 minutos</span>
-          <h2>Diagnostico empresarial</h2>
+          <span className="form-note">Diagnostico inicial</span>
+          <h2>Cuentanos que esta desordenado</h2>
           <p>
-            Te responderemos con una primera orientacion sobre el servicio mas
-            adecuado para tu empresa.
+            Identificaremos si el problema esta en acciones, gobierno
+            corporativo o imagen empresarial.
           </p>
           <LeadForm />
         </aside>
@@ -219,134 +223,7 @@ export default function Home() {
             empresarial. Si las decisiones internas no tienen reglas claras,
             empieza por gobierno corporativo.
           </p>
-          <Link className="button" href="#consulta">
-            Solicitar diagnostico empresarial
-          </Link>
         </div>
-      </section>
-
-      <section className="section audience-section" id="para-quien">
-        <div>
-          <span className="eyebrow">Para quien es</span>
-          <h2>
-            Empresas que necesitan verse tan ordenadas como quieren crecer.
-          </h2>
-          <p>
-            No somos una firma generalista; trabajamos con empresarios que
-            necesitan ordenar su estructura corporativa.
-          </p>
-        </div>
-        <div className="audience-list">
-          <span>Empresas familiares</span>
-          <span>Sociedades en crecimiento</span>
-          <span>Fundadores con socios</span>
-          <span>Empresas buscando inversion</span>
-        </div>
-      </section>
-
-      <section className="section split-section" id="proceso">
-        <div>
-          <span className="eyebrow">Como funciona</span>
-          <h2>Tres pasos para ordenar la ruta juridica</h2>
-          <p>
-            El acompanamiento se enfoca en entender la empresa, priorizar
-            riesgos y convertir el orden legal en ventaja.
-          </p>
-        </div>
-        <div className="process-list">
-          <div>
-            <strong>1. Envia tu consulta</strong>
-            <p>
-              Indicanos el servicio corporativo, la empresa, tu cargo y el
-              objetivo principal.
-            </p>
-          </div>
-          <div>
-            <strong>2. Diagnosticamos prioridades</strong>
-            <p>
-              Identificamos si la prioridad esta en acciones, imagen empresarial
-              o gobierno corporativo.
-            </p>
-          </div>
-          <div>
-            <strong>3. Definimos ruta de accion</strong>
-            <p>
-              Recibes una ruta inicial con prioridades juridicas y corporativas
-              para avanzar con mayor claridad.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="stats-grid">
-          <div className="stat">
-            <strong>Orden interno</strong>
-            <p>
-              Claridad sobre propiedad, decisiones, roles y procesos sensibles.
-            </p>
-          </div>
-          <div className="stat">
-            <strong>Ventaja competitiva</strong>
-            <p>
-              Mayor confianza para negociar, presentarse y tomar decisiones.
-            </p>
-          </div>
-          <div className="stat">
-            <strong>Atraccion de inversion</strong>
-            <p>
-              Una estructura juridica clara facilita conversaciones con
-              inversionistas.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="section faq-section">
-        <div className="section-heading">
-          <span className="eyebrow">Preguntas frecuentes</span>
-          <h2>Antes de consultar</h2>
-        </div>
-        <div className="faq-grid">
-          <details>
-            <summary>Que recibo despues del diagnostico?</summary>
-            <p>
-              Una primera orientacion sobre el servicio adecuado y las
-              prioridades juridicas que conviene revisar.
-            </p>
-          </details>
-          <details>
-            <summary>Puedo consultar si aun no busco inversionistas?</summary>
-            <p>
-              Si. Ordenar acciones, imagen y gobierno corporativo tambien ayuda
-              a prevenir conflictos internos.
-            </p>
-          </details>
-          <details>
-            <summary>Este servicio aplica para empresas familiares?</summary>
-            <p>
-              Si. Especialmente cuando propiedad, administracion y decisiones
-              familiares se mezclan en la empresa.
-            </p>
-          </details>
-        </div>
-      </section>
-
-      <section className="section final-cta">
-        <div>
-          <span className="eyebrow">Siguiente paso</span>
-          <h2>
-            Ordena la estructura juridica antes de que el crecimiento la ponga a
-            prueba.
-          </h2>
-          <p>
-            Solicita un diagnostico empresarial y recibe una primera orientacion
-            sobre el frente que conviene priorizar.
-          </p>
-        </div>
-        <Link className="button final-cta-button" href="#consulta">
-          Solicitar diagnostico
-        </Link>
       </section>
     </main>
   );
