@@ -1,31 +1,12 @@
-import { NextResponse } from "next/server";
-import { ZodError } from "zod";
 import { query } from "@/lib/db";
 import { isAdminRequest, unauthorized } from "@/lib/auth";
+import { badRequest, created, ok, serverError, validationError } from "@/lib/api-response";
 import {
   CreatePostSchema,
   DeletePostSchema,
   UpdatePostStatusSchema,
 } from "@/lib/validators/post.schema";
 import type { BlogPost } from "@/types";
-
-function validationError(error: unknown) {
-  if (error instanceof ZodError) {
-    const firstError = error.issues[0]?.message || "Datos inválidos.";
-    return NextResponse.json({ error: firstError }, { status: 400 });
-  }
-
-  return NextResponse.json({ error: "Datos inválidos." }, { status: 400 });
-}
-
-function serverError(context: string, error: unknown) {
-  console.error(context, error);
-
-  return NextResponse.json(
-    { error: "Ocurrió un error interno. Intenta nuevamente." },
-    { status: 500 },
-  );
-}
 
 export async function GET(request: Request) {
   try {
@@ -45,7 +26,7 @@ export async function GET(request: Request) {
        ORDER BY COALESCE(published_at, created_at) DESC`,
     );
 
-    return NextResponse.json({ posts });
+    return ok({ posts });
   } catch (error) {
     return serverError("POSTS_GET_ERROR", error);
   }
@@ -61,7 +42,7 @@ export async function POST(request: Request) {
     const post = CreatePostSchema.parse(body);
 
     if (!post.slug) {
-      return NextResponse.json({ error: "Slug inválido." }, { status: 400 });
+      return badRequest("Slug inválido.");
     }
 
     await query(
@@ -79,13 +60,9 @@ export async function POST(request: Request) {
       ],
     );
 
-    return NextResponse.json({ ok: true }, { status: 201 });
+    return created();
   } catch (error) {
-    if (error instanceof ZodError) {
-      return validationError(error);
-    }
-
-    return serverError("POST_CREATE_ERROR", error);
+    return validationError(error) || serverError("POST_CREATE_ERROR", error);
   }
 }
 
@@ -105,13 +82,9 @@ export async function PATCH(request: Request) {
       [payload.status, payload.status, payload.id],
     );
 
-    return NextResponse.json({ ok: true });
+    return ok();
   } catch (error) {
-    if (error instanceof ZodError) {
-      return validationError(error);
-    }
-
-    return serverError("POST_UPDATE_ERROR", error);
+    return validationError(error) || serverError("POST_UPDATE_ERROR", error);
   }
 }
 
@@ -126,12 +99,8 @@ export async function DELETE(request: Request) {
 
     await query("DELETE FROM blog_posts WHERE id = ?", [payload.id]);
 
-    return NextResponse.json({ ok: true });
+    return ok();
   } catch (error) {
-    if (error instanceof ZodError) {
-      return validationError(error);
-    }
-
-    return serverError("POST_DELETE_ERROR", error);
+    return validationError(error) || serverError("POST_DELETE_ERROR", error);
   }
 }
