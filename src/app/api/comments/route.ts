@@ -1,30 +1,12 @@
-import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { query } from "@/lib/db";
 import { isAdminRequest, unauthorized } from "@/lib/auth";
+import { ok, serverError, validationError } from "@/lib/api-response";
 import {
   DeleteCommentSchema,
   UpdateCommentStatusSchema,
 } from "@/lib/validators/comment.schema";
 import type { BlogComment } from "@/types";
-
-function validationError(error: unknown) {
-  if (error instanceof ZodError) {
-    const firstError = error.issues[0]?.message || "Datos inválidos.";
-    return NextResponse.json({ error: firstError }, { status: 400 });
-  }
-
-  return NextResponse.json({ error: "Datos inválidos." }, { status: 400 });
-}
-
-function serverError(context: string, error: unknown) {
-  console.error(context, error);
-
-  return NextResponse.json(
-    { error: "Ocurrió un error interno. Intenta nuevamente." },
-    { status: 500 },
-  );
-}
 
 export async function GET(request: Request) {
   if (!isAdminRequest(request)) {
@@ -40,7 +22,7 @@ export async function GET(request: Request) {
        ORDER BY c.created_at DESC`,
     );
 
-    return NextResponse.json({ comments });
+    return ok({ comments });
   } catch (error) {
     return serverError("COMMENTS_GET_ERROR", error);
   }
@@ -60,7 +42,7 @@ export async function PATCH(request: Request) {
       payload.id,
     ]);
 
-    return NextResponse.json({ ok: true });
+    return ok();
   } catch (error) {
     if (error instanceof ZodError) {
       return validationError(error);
@@ -81,7 +63,7 @@ export async function DELETE(request: Request) {
 
     await query("DELETE FROM blog_comments WHERE id = ?", [payload.id]);
 
-    return NextResponse.json({ ok: true });
+    return ok();
   } catch (error) {
     if (error instanceof ZodError) {
       return validationError(error);
