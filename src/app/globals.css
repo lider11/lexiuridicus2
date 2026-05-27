@@ -194,6 +194,10 @@ textarea {
   gap: 4px;
 }
 
+.nav-service-group {
+  position: relative;
+}
+
 .nav a,
 .button,
 .ghost-button {
@@ -216,6 +220,41 @@ textarea {
 .nav a:hover {
   background: var(--mint);
   color: var(--brand-strong);
+}
+
+.nav-service-menu {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 18px 44px rgba(18, 58, 24, 0.14);
+  display: grid;
+  gap: 4px;
+  left: 0;
+  min-width: 250px;
+  opacity: 0;
+  padding: 8px;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  transform: translateY(-4px);
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+  z-index: 30;
+}
+
+.nav-service-menu a {
+  border-color: transparent;
+  justify-content: flex-start;
+  min-height: 38px;
+  width: 100%;
+}
+
+.nav-service-group:hover .nav-service-menu,
+.nav-service-group:focus-within .nav-service-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .nav .nav-admin {
@@ -515,6 +554,17 @@ fieldset label:has(select[name="shareholder_context"]) {
 .check-row input {
   min-height: 18px;
   width: 18px;
+}
+
+.form-trust {
+  background: #fbfaf6;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 12px;
 }
 
 label {
@@ -1581,18 +1631,22 @@ summary {
   gap: 10px;
 }
 
-.social-links a {
+.social-links a,
+.social-placeholder {
   align-items: center;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.78);
   display: inline-flex;
+  font-weight: 800;
   gap: 8px;
   margin: 0;
   min-height: 38px;
   padding: 7px 10px;
 }
 
-.social-links span {
+.social-links a span,
+.social-placeholder span {
   align-items: center;
   background: var(--accent);
   color: var(--brand-strong);
@@ -1603,6 +1657,10 @@ summary {
   justify-content: center;
   text-transform: uppercase;
   width: 24px;
+}
+
+.footer-note {
+  font-size: 0.88rem;
 }
 
 .footer-bottom {
@@ -1846,6 +1904,20 @@ summary {
 
   .nav {
     width: 100%;
+  }
+
+  .nav-service-group {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .nav-service-menu {
+    box-shadow: none;
+    margin-top: 4px;
+    opacity: 1;
+    pointer-events: auto;
+    position: static;
+    transform: none;
   }
 
   .nav a {

@@ -13,7 +13,22 @@ export function Header() {
         </span>
       </Link>
       <nav className="nav" aria-label="Principal">
-        <Link href="/#servicios">Servicios</Link>
+        <div className="nav-service-group">
+          <Link className="nav-service-root" href="/#servicios">
+            Servicios
+          </Link>
+          <div className="nav-service-menu" aria-label="Servicios principales">
+            <Link href="/servicios/tradicion-de-acciones">
+              Tradicion de acciones
+            </Link>
+            <Link href="/servicios/imagen-empresarial">
+              Imagen empresarial
+            </Link>
+            <Link href="/servicios/gobierno-corporativo">
+              Gobierno corporativo
+            </Link>
+          </div>
+        </div>
         <Link href="/metodo">Metodo</Link>
         <Link href="/para-quien-es">Para quien es</Link>
         <Link href="/blog">Blog</Link>

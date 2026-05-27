@@ -33,57 +33,33 @@ export function Footer() {
         <div>
           <h3>Redes sociales</h3>
           <div className="social-links">
-            <a
-              href="https://www.linkedin.com"
-              rel="noreferrer"
-              target="_blank"
-              aria-label="LinkedIn"
-            >
+            <span className="social-placeholder" aria-label="LinkedIn">
               <span aria-hidden="true">in</span>
               LinkedIn
-            </a>
-            <a
-              href="https://www.instagram.com"
-              rel="noreferrer"
-              target="_blank"
-              aria-label="Instagram"
-            >
+            </span>
+            <span className="social-placeholder" aria-label="Instagram">
               <span aria-hidden="true">ig</span>
               Instagram
-            </a>
-            <a
-              href="https://www.facebook.com"
-              rel="noreferrer"
-              target="_blank"
-              aria-label="Facebook"
-            >
+            </span>
+            <span className="social-placeholder" aria-label="Facebook">
               <span aria-hidden="true">f</span>
               Facebook
-            </a>
-            <a
-              href="https://www.pinterest.com"
-              rel="noreferrer"
-              target="_blank"
-              aria-label="Pinterest"
-            >
+            </span>
+            <span className="social-placeholder" aria-label="Pinterest">
               <span aria-hidden="true">p</span>
               Pinterest
-            </a>
-            <a
-              href="https://www.tiktok.com"
-              rel="noreferrer"
-              target="_blank"
-              aria-label="TikTok"
-            >
+            </span>
+            <span className="social-placeholder" aria-label="TikTok">
               <span aria-hidden="true">tt</span>
               TikTok
-            </a>
+            </span>
           </div>
+          <p className="footer-note">Perfiles oficiales en preparacion.</p>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <span>© 2026 Lexiuridicus. Todos los derechos reservados.</span>
+        <span>(c) 2026 Lexiuridicus. Todos los derechos reservados.</span>
         <Link href="/#consulta">Solicitar diagnostico</Link>
       </div>
     </footer>

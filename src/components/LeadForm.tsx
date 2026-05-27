@@ -170,7 +170,7 @@ export function LeadForm() {
         <span>
           Acepto el tratamiento de mis datos personales conforme a la{" "}
           <a href="/politica-de-datos" target="_blank" rel="noreferrer">
-            política de tratamiento de datos
+            politica de tratamiento de datos
           </a>
           .
         </span>
@@ -178,6 +178,10 @@ export function LeadForm() {
       <button className="button" disabled={isSaving} type="submit">
         {isSaving ? "Enviando..." : "Enviar solicitud"}
       </button>
+      <p className="form-trust">
+        Tu informacion se revisa con reserva. Esta solicitud es orientativa y
+        no reemplaza una asesoria juridica personalizada.
+      </p>
       {message ? <div className="message">{message}</div> : null}
       {error ? <div className="error">{error}</div> : null}
     </form>
