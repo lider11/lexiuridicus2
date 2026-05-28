@@ -3,7 +3,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 import { AdminTabs } from "@/components/admin/AdminTabs";
-import type { AdminTab } from "@/components/admin/admin.types";
+import { statusOptions } from "@/components/admin/admin.constants";
+import type {
+  AdminTab,
+  ClientStatusFilter,
+} from "@/components/admin/admin.types";
 import type {
   BlogComment,
   BlogPost,
@@ -11,14 +15,6 @@ import type {
   ClientStatus,
   CommentStatus,
 } from "@/types";
-
-const statusOptions: { label: string; value: ClientStatus | "todos" }[] = [
-  { label: "Todos", value: "todos" },
-  { label: "Nuevo", value: "nuevo" },
-  { label: "Contactado", value: "contactado" },
-  { label: "En proceso", value: "en_proceso" },
-  { label: "Cerrado", value: "cerrado" },
-];
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
@@ -30,9 +26,7 @@ export function AdminDashboard() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState<AdminTab>("clientes");
-  const [statusFilter, setStatusFilter] = useState<ClientStatus | "todos">(
-    "todos",
-  );
+  const [statusFilter, setStatusFilter] = useState<ClientStatusFilter>("todos");
   const [search, setSearch] = useState("");
 
   const adminHeaders = {
@@ -519,9 +513,7 @@ export function AdminDashboard() {
                   Estado
                   <select
                     onChange={(event) =>
-                      setStatusFilter(
-                        event.target.value as ClientStatus | "todos",
-                      )
+                      setStatusFilter(event.target.value as ClientStatusFilter)
                     }
                     value={statusFilter}
                   >
