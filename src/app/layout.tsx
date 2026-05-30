@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Chatbot } from "@/components/Chatbot";
 import { Footer } from "@/components/Footer";
 import { StructuredData } from "@/components/StructuredData";
@@ -39,7 +38,6 @@ export default function RootLayout({
         {children}
         <Footer />
         <Chatbot />
-        <Script src="/chatbot.js" strategy="afterInteractive" />
       </body>
     </html>
   );
