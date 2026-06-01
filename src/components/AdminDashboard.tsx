@@ -14,10 +14,8 @@ import type {
   ClientStatus,
   CommentStatus,
 } from "@/types";
-import { ClientStats } from "@/components/admin/ClientStats";
-import { ClientPanelHeader } from "@/components/admin/ClientPanelHeader";
-import { ClientFilters } from "@/components/admin/ClientFilters";
-import { ClientList } from "@/components/admin/ClientList";
+import { ClientPanel } from "@/components/admin/ClientPanel";
+import { BlogPanel } from "@/components/admin/BlogPanel";
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
@@ -449,146 +447,29 @@ export function AdminDashboard() {
           {message ? <div className="message">{message}</div> : null}
 
           {activeTab === "clientes" ? (
-            <section className="admin-panel stack">
-              <ClientStats
-                total={clientStats.total}
-                nuevos={clientStats.nuevos}
-                contactados={clientStats.contactados}
-                enProceso={clientStats.enProceso}
-                cerrados={clientStats.cerrados}
-                altaPrioridad={clientStats.altaPrioridad}
-                onStatusFilterChange={setStatusFilter}
-              />
-              <ClientPanelHeader
-                visibleCount={filteredClients.length}
-                onExportClients={exportClients}
-              />
-              <ClientFilters
-                search={search}
-                statusFilter={statusFilter}
-                onSearchChange={setSearch}
-                onStatusFilterChange={setStatusFilter}
-              />
-              <ClientList
-                clients={filteredClients}
-                draftNotes={draftNotes}
-                onClientStatusChange={updateClientStatus}
-                onDraftNoteChange={(id, value) =>
-                  setDraftNotes((current) => ({ ...current, [id]: value }))
-                }
-                onSaveInternalNotes={saveInternalNotes}
-                onDeleteClient={deleteClient}
-              />
-            </section>
+            <ClientPanel
+              clients={filteredClients}
+              clientStats={clientStats}
+              draftNotes={draftNotes}
+              search={search}
+              statusFilter={statusFilter}
+              onSearchChange={setSearch}
+              onStatusFilterChange={setStatusFilter}
+              onExportClients={exportClients}
+              onClientStatusChange={updateClientStatus}
+              onDraftNoteChange={(id, value) =>
+                setDraftNotes((current) => ({ ...current, [id]: value }))
+              }
+              onSaveInternalNotes={saveInternalNotes}
+              onDeleteClient={deleteClient}
+            />
           ) : activeTab === "blog" ? (
-            <section className="admin-layout">
-              <div className="admin-panel stack">
-                <div>
-                  <span className="eyebrow">Blog</span>
-                  <h2>Nuevo articulo</h2>
-                </div>
-                <form className="form-grid" onSubmit={createPost}>
-                  <label>
-                    Titulo
-                    <input
-                      name="title"
-                      required
-                      placeholder="Titulo del articulo"
-                    />
-                  </label>
-                  <label>
-                    Categoria
-                    <select name="category" defaultValue="Gobierno corporativo">
-                      <option value="Gobierno corporativo">
-                        Gobierno corporativo
-                      </option>
-                      <option value="Tradicion de acciones">
-                        Tradicion de acciones
-                      </option>
-                      <option value="Imagen empresarial">
-                        Imagen empresarial
-                      </option>
-                    </select>
-                  </label>
-                  <label>
-                    Resumen
-                    <textarea
-                      name="excerpt"
-                      required
-                      placeholder="Resumen para el listado del blog"
-                    />
-                  </label>
-                  <label>
-                    Contenido
-                    <textarea
-                      name="content"
-                      required
-                      placeholder="Contenido principal"
-                    />
-                  </label>
-                  <label>
-                    Autor
-                    <input name="author" placeholder="Equipo Lexiuridicus" />
-                  </label>
-                  <label>
-                    Estado
-                    <select name="status" defaultValue="borrador">
-                      <option value="borrador">Borrador</option>
-                      <option value="publicado">Publicado</option>
-                    </select>
-                  </label>
-                  <button className="button" type="submit">
-                    Guardar articulo
-                  </button>
-                </form>
-              </div>
-
-              <div className="admin-panel stack">
-                <h3>Articulos</h3>
-                {posts.length ? (
-                  posts.map((post) => (
-                    <article className="post-card" key={post.id}>
-                      <div className="client-heading">
-                        <div className="client-tags">
-                          <span className="status-pill">{post.category}</span>
-                          <span className="status-pill">{post.status}</span>
-                        </div>
-                        <span className="meta">{post.author}</span>
-                      </div>
-                      <h3>{post.title}</h3>
-                      <p>{post.excerpt}</p>
-                      <div className="client-actions">
-                        <button
-                          className="ghost-button compact-button"
-                          onClick={() =>
-                            updatePostStatus(
-                              post.id,
-                              post.status === "publicado"
-                                ? "borrador"
-                                : "publicado",
-                            )
-                          }
-                          type="button"
-                        >
-                          {post.status === "publicado"
-                            ? "Pasar a borrador"
-                            : "Publicar"}
-                        </button>
-                        <button
-                          className="danger-button compact-button"
-                          onClick={() => deletePost(post.id, post.title)}
-                          type="button"
-                        >
-                          Eliminar
-                        </button>
-                      </div>
-                    </article>
-                  ))
-                ) : (
-                  <p>No hay articulos creados todavia.</p>
-                )}
-              </div>
-            </section>
+            <BlogPanel
+              posts={posts}
+              onCreatePost={createPost}
+              onUpdatePostStatus={updatePostStatus}
+              onDeletePost={deletePost}
+            />
           ) : (
             <section className="admin-panel stack">
               <div
