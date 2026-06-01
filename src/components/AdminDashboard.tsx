@@ -15,6 +15,8 @@ import type {
   ClientStatus,
   CommentStatus,
 } from "@/types";
+import { ClientStats } from "@/components/admin/ClientStats";
+import { ClientPanelHeader } from "@/components/admin/ClientPanelHeader";
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
@@ -447,59 +449,19 @@ export function AdminDashboard() {
 
           {activeTab === "clientes" ? (
             <section className="admin-panel stack">
-              <div className="admin-stats" aria-label="Resumen de solicitudes">
-                <button onClick={() => setStatusFilter("todos")} type="button">
-                  <span>Total</span>
-                  <strong>{clientStats.total}</strong>
-                </button>
-                <button onClick={() => setStatusFilter("nuevo")} type="button">
-                  <span>Nuevos</span>
-                  <strong>{clientStats.nuevos}</strong>
-                </button>
-                <button
-                  onClick={() => setStatusFilter("contactado")}
-                  type="button"
-                >
-                  <span>Contactados</span>
-                  <strong>{clientStats.contactados}</strong>
-                </button>
-                <button
-                  onClick={() => setStatusFilter("en_proceso")}
-                  type="button"
-                >
-                  <span>En proceso</span>
-                  <strong>{clientStats.enProceso}</strong>
-                </button>
-                <button
-                  onClick={() => setStatusFilter("cerrado")}
-                  type="button"
-                >
-                  <span>Cerrados</span>
-                  <strong>{clientStats.cerrados}</strong>
-                </button>
-                <div className="priority-stat">
-                  <span>Alta prioridad</span>
-                  <strong>{clientStats.altaPrioridad}</strong>
-                </div>
-              </div>
-              <div className="panel-header">
-                <div>
-                  <span className="eyebrow">Clientes</span>
-                  <h2>Solicitudes recibidas</h2>
-                </div>
-                <div className="panel-actions">
-                  <span className="status-pill">
-                    {filteredClients.length} visibles
-                  </span>
-                  <button
-                    className="ghost-button compact-button"
-                    onClick={exportClients}
-                    type="button"
-                  >
-                    Exportar CSV
-                  </button>
-                </div>
-              </div>
+              <ClientStats
+                total={clientStats.total}
+                nuevos={clientStats.nuevos}
+                contactados={clientStats.contactados}
+                enProceso={clientStats.enProceso}
+                cerrados={clientStats.cerrados}
+                altaPrioridad={clientStats.altaPrioridad}
+                onStatusFilterChange={setStatusFilter}
+              />
+              <ClientPanelHeader
+                visibleCount={filteredClients.length}
+                onExportClients={exportClients}
+              />
               <div className="filters">
                 <label>
                   Buscar
