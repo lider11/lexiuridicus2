@@ -17,6 +17,7 @@ import type {
 import { ClientStats } from "@/components/admin/ClientStats";
 import { ClientPanelHeader } from "@/components/admin/ClientPanelHeader";
 import { ClientFilters } from "@/components/admin/ClientFilters";
+import { ClientList } from "@/components/admin/ClientList";
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
@@ -468,100 +469,16 @@ export function AdminDashboard() {
                 onSearchChange={setSearch}
                 onStatusFilterChange={setStatusFilter}
               />
-              <div className="stack">
-                {filteredClients.length ? (
-                  filteredClients.map((client) => (
-                    <article className="client-row" key={client.id}>
-                      <div className="client-heading">
-                        <div>
-                          <strong>{client.full_name}</strong>
-                          <span className="meta">
-                            {client.company} | {client.role}
-                          </span>
-                          <span className="meta">
-                            {client.email} | {client.phone}
-                          </span>
-                        </div>
-                        <select
-                          aria-label={`Estado de ${client.full_name}`}
-                          onChange={(event) =>
-                            updateClientStatus(
-                              client.id,
-                              event.target.value as ClientStatus,
-                            )
-                          }
-                          value={client.status}
-                        >
-                          <option value="nuevo">Nuevo</option>
-                          <option value="contactado">Contactado</option>
-                          <option value="en_proceso">En proceso</option>
-                          <option value="cerrado">Cerrado</option>
-                        </select>
-                      </div>
-                      <div className="client-tags">
-                        <span className="status-pill">{client.legal_need}</span>
-                        <span className="status-pill">
-                          {client.business_goal}
-                        </span>
-                        {client.shareholder_context ? (
-                          <span className="status-pill">
-                            {client.shareholder_context}
-                          </span>
-                        ) : null}
-                        <span
-                          className={`status-pill urgency-${client.urgency}`}
-                        >
-                          Urgencia {client.urgency}
-                        </span>
-                      </div>
-                      {client.notes ? (
-                        <p>{client.notes}</p>
-                      ) : (
-                        <p>Sin notas adicionales.</p>
-                      )}
-                      <label className="internal-notes">
-                        Notas internas
-                        <textarea
-                          onChange={(event) =>
-                            setDraftNotes((current) => ({
-                              ...current,
-                              [client.id]: event.target.value,
-                            }))
-                          }
-                          placeholder="Seguimiento, llamada, documentos solicitados..."
-                          value={draftNotes[client.id] || ""}
-                        />
-                      </label>
-                      <div className="client-actions">
-                        <button
-                          className="ghost-button compact-button"
-                          onClick={() => saveInternalNotes(client.id)}
-                          type="button"
-                        >
-                          Guardar notas
-                        </button>
-                        <button
-                          className="danger-button compact-button"
-                          onClick={() =>
-                            deleteClient(client.id, client.full_name)
-                          }
-                          type="button"
-                        >
-                          Eliminar
-                        </button>
-                      </div>
-                      <span className="meta">
-                        Ingreso:{" "}
-                        {new Date(client.created_at).toLocaleDateString(
-                          "es-CO",
-                        )}
-                      </span>
-                    </article>
-                  ))
-                ) : (
-                  <p>No hay clientes que coincidan con los filtros.</p>
-                )}
-              </div>
+              <ClientList
+                clients={filteredClients}
+                draftNotes={draftNotes}
+                onClientStatusChange={updateClientStatus}
+                onDraftNoteChange={(id, value) =>
+                  setDraftNotes((current) => ({ ...current, [id]: value }))
+                }
+                onSaveInternalNotes={saveInternalNotes}
+                onDeleteClient={deleteClient}
+              />
             </section>
           ) : activeTab === "blog" ? (
             <section className="admin-layout">
