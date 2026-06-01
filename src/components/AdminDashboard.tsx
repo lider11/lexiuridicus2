@@ -3,7 +3,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 import { AdminTabs } from "@/components/admin/AdminTabs";
-import { statusOptions } from "@/components/admin/admin.constants";
 import type {
   AdminTab,
   ClientStatusFilter,
@@ -17,6 +16,7 @@ import type {
 } from "@/types";
 import { ClientStats } from "@/components/admin/ClientStats";
 import { ClientPanelHeader } from "@/components/admin/ClientPanelHeader";
+import { ClientFilters } from "@/components/admin/ClientFilters";
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
@@ -462,31 +462,12 @@ export function AdminDashboard() {
                 visibleCount={filteredClients.length}
                 onExportClients={exportClients}
               />
-              <div className="filters">
-                <label>
-                  Buscar
-                  <input
-                    onChange={(event) => setSearch(event.target.value)}
-                    placeholder="Nombre, empresa, correo, telefono o caso"
-                    value={search}
-                  />
-                </label>
-                <label>
-                  Estado
-                  <select
-                    onChange={(event) =>
-                      setStatusFilter(event.target.value as ClientStatusFilter)
-                    }
-                    value={statusFilter}
-                  >
-                    {statusOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
+              <ClientFilters
+                search={search}
+                statusFilter={statusFilter}
+                onSearchChange={setSearch}
+                onStatusFilterChange={setStatusFilter}
+              />
               <div className="stack">
                 {filteredClients.length ? (
                   filteredClients.map((client) => (
