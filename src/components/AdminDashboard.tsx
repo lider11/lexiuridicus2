@@ -16,6 +16,7 @@ import type {
 } from "@/types";
 import { ClientPanel } from "@/components/admin/ClientPanel";
 import { BlogPanel } from "@/components/admin/BlogPanel";
+import { CommentPanel } from "@/components/admin/CommentPanel";
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
@@ -471,88 +472,12 @@ export function AdminDashboard() {
               onDeletePost={deletePost}
             />
           ) : (
-            <section className="admin-panel stack">
-              <div
-                className="admin-stats comments-stats"
-                aria-label="Resumen de comentarios"
-              >
-                <div className="priority-stat">
-                  <span>Pendientes</span>
-                  <strong>{commentStats.pendientes}</strong>
-                </div>
-                <div className="priority-stat">
-                  <span>Aprobados</span>
-                  <strong>{commentStats.aprobados}</strong>
-                </div>
-                <div className="priority-stat">
-                  <span>Rechazados</span>
-                  <strong>{commentStats.rechazados}</strong>
-                </div>
-                <div className="priority-stat">
-                  <span>Total</span>
-                  <strong>{commentStats.total}</strong>
-                </div>
-              </div>
-              <div className="panel-header">
-                <div>
-                  <span className="eyebrow">Moderacion</span>
-                  <h2>Comentarios del blog</h2>
-                </div>
-              </div>
-              <div className="stack">
-                {comments.length ? (
-                  comments.map((comment) => (
-                    <article className="client-row" key={comment.id}>
-                      <div className="client-heading">
-                        <div>
-                          <strong>{comment.author_name}</strong>
-                          <span className="meta">
-                            {comment.author_email} |{" "}
-                            {new Date(comment.created_at).toLocaleDateString(
-                              "es-CO",
-                            )}
-                          </span>
-                        </div>
-                        <span className="status-pill">{comment.status}</span>
-                      </div>
-                      <span className="meta">
-                        Articulo: {comment.post_title}
-                      </span>
-                      <p>{comment.comment}</p>
-                      <div className="client-actions">
-                        <button
-                          className="ghost-button compact-button"
-                          onClick={() =>
-                            updateCommentStatus(comment.id, "aprobado")
-                          }
-                          type="button"
-                        >
-                          Aprobar
-                        </button>
-                        <button
-                          className="ghost-button compact-button"
-                          onClick={() =>
-                            updateCommentStatus(comment.id, "rechazado")
-                          }
-                          type="button"
-                        >
-                          Rechazar
-                        </button>
-                        <button
-                          className="danger-button compact-button"
-                          onClick={() => deleteComment(comment.id)}
-                          type="button"
-                        >
-                          Eliminar
-                        </button>
-                      </div>
-                    </article>
-                  ))
-                ) : (
-                  <p>No hay comentarios para moderar todavia.</p>
-                )}
-              </div>
-            </section>
+            <CommentPanel
+              comments={comments}
+              commentStats={commentStats}
+              onUpdateCommentStatus={updateCommentStatus}
+              onDeleteComment={deleteComment}
+            />
           )}
         </>
       ) : null}
