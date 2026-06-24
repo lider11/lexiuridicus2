@@ -57,7 +57,6 @@ export function AdminDashboard() {
           (response) => response.status === 401,
         )
       ) {
-        window.localStorage.removeItem("lexiuridicus_admin_token");
         setAdminToken("");
         setTokenInput("");
         setClients([]);
@@ -95,13 +94,6 @@ export function AdminDashboard() {
   }
 
   useEffect(() => {
-    const storedToken =
-      window.localStorage.getItem("lexiuridicus_admin_token") || "";
-    setAdminToken(storedToken);
-    setTokenInput(storedToken);
-  }, []);
-
-  useEffect(() => {
     if (adminToken) {
       loadData();
     }
@@ -110,12 +102,11 @@ export function AdminDashboard() {
   function loginAdmin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextToken = tokenInput.trim();
-    window.localStorage.setItem("lexiuridicus_admin_token", nextToken);
     setAdminToken(nextToken);
+    setTokenInput("");
   }
 
   function logoutAdmin() {
-    window.localStorage.removeItem("lexiuridicus_admin_token");
     setAdminToken("");
     setTokenInput("");
     setClients([]);
