@@ -7,8 +7,11 @@ export const siteConfig = {
   url: siteUrl,
   description:
     "Derecho corporativo en Barranquilla y Colombia para empresas, socios e inversionistas. Diagnostico en tradicion de acciones, imagen empresarial y gobierno corporativo.",
-  email: "contacto@lexiuridicus.com",
-  phone: "+57 300 000 0000",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contacto@lexiuridicus.com",
+  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+57 301 237 0047",
+  additionalPhones: [
+    process.env.NEXT_PUBLIC_CONTACT_PHONE_SECONDARY || "+57 300 839 3987",
+  ].filter(Boolean),
   address: {
     streetAddress: "Barranquilla",
     addressLocality: "Barranquilla",
@@ -20,4 +23,5 @@ export const siteConfig = {
     "Imagen empresarial",
     "Gobierno corporativo",
   ],
+  sameAs: [],
 };
