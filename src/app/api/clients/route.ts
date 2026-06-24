@@ -1,28 +1,17 @@
-import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { query } from "@/lib/db";
 import { isAdminRequest, unauthorized } from "@/lib/auth";
+import {
+  badRequest,
+  created,
+  ok,
+  serverError,
+  tooManyRequests,
+  validationError,
+} from "@/lib/api-response";
+import { query } from "@/lib/db";
 import { isRateLimited, requestIp } from "@/lib/rateLimit";
 import { LeadSchema, UpdateClientSchema } from "@/lib/validators/client.schema";
 import type { Client } from "@/types";
-
-function validationError(error: unknown) {
-  if (error instanceof ZodError) {
-    const firstError = error.issues[0]?.message || "Datos inválidos.";
-    return NextResponse.json({ error: firstError }, { status: 400 });
-  }
-
-  return NextResponse.json({ error: "Datos inválidos." }, { status: 400 });
-}
-
-function serverError(context: string, error: unknown) {
-  console.error(context, error);
-
-  return NextResponse.json(
-    { error: "Ocurrió un error interno. Intenta nuevamente." },
-    { status: 500 },
-  );
-}
 
 export async function GET(request: Request) {
   if (!isAdminRequest(request)) {
@@ -37,7 +26,7 @@ export async function GET(request: Request) {
        ORDER BY created_at DESC`,
     );
 
-    return NextResponse.json({ clients });
+    return ok({ clients });
   } catch (error) {
     return serverError("CLIENTS_GET_ERROR", error);
   }
@@ -45,9 +34,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   if (isRateLimited(`lead:${requestIp(request)}`, 6, 60_000)) {
-    return NextResponse.json(
-      { error: "Demasiados intentos. Intenta de nuevo en un minuto." },
-      { status: 429 },
+    return tooManyRequests(
+      "Demasiados intentos. Intenta de nuevo en un minuto.",
     );
   }
 
@@ -74,7 +62,7 @@ export async function POST(request: Request) {
       ],
     );
 
-    return NextResponse.json({ ok: true }, { status: 201 });
+    return created();
   } catch (error) {
     if (error instanceof ZodError) {
       return validationError(error);
@@ -109,13 +97,10 @@ export async function PATCH(request: Request) {
         payload.id,
       ]);
     } else {
-      return NextResponse.json(
-        { error: "No hay cambios para guardar." },
-        { status: 400 },
-      );
+      return badRequest("No hay cambios para guardar.");
     }
 
-    return NextResponse.json({ ok: true });
+    return ok();
   } catch (error) {
     if (error instanceof ZodError) {
       return validationError(error);
@@ -135,12 +120,12 @@ export async function DELETE(request: Request) {
     const id = Number(searchParams.get("id"));
 
     if (!Number.isInteger(id) || id <= 0) {
-      return NextResponse.json({ error: "Cliente inválido." }, { status: 400 });
+      return badRequest("Cliente inválido.");
     }
 
     await query("DELETE FROM clients WHERE id = ?", [id]);
 
-    return NextResponse.json({ ok: true });
+    return ok();
   } catch (error) {
     return serverError("CLIENT_DELETE_ERROR", error);
   }

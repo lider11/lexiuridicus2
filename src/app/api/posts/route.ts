@@ -1,5 +1,6 @@
 import { query } from "@/lib/db";
 import { isAdminRequest, unauthorized } from "@/lib/auth";
+import { ZodError } from "zod";
 import {
   badRequest,
   created,
@@ -68,7 +69,11 @@ export async function POST(request: Request) {
 
     return created();
   } catch (error) {
-    return validationError(error) || serverError("POST_CREATE_ERROR", error);
+    if (error instanceof ZodError) {
+      return validationError(error);
+    }
+
+    return serverError("POST_CREATE_ERROR", error);
   }
 }
 
@@ -90,7 +95,11 @@ export async function PATCH(request: Request) {
 
     return ok();
   } catch (error) {
-    return validationError(error) || serverError("POST_UPDATE_ERROR", error);
+    if (error instanceof ZodError) {
+      return validationError(error);
+    }
+
+    return serverError("POST_UPDATE_ERROR", error);
   }
 }
 
@@ -107,6 +116,10 @@ export async function DELETE(request: Request) {
 
     return ok();
   } catch (error) {
-    return validationError(error) || serverError("POST_DELETE_ERROR", error);
+    if (error instanceof ZodError) {
+      return validationError(error);
+    }
+
+    return serverError("POST_DELETE_ERROR", error);
   }
 }
