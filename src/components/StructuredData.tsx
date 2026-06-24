@@ -1,6 +1,10 @@
 import { siteConfig } from "@/lib/site";
 
 export function StructuredData() {
+  const telephones = [siteConfig.phone, ...siteConfig.additionalPhones].filter(
+    Boolean,
+  );
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "LegalService",
@@ -8,8 +12,8 @@ export function StructuredData() {
     legalName: siteConfig.legalName,
     url: siteConfig.url,
     description: siteConfig.description,
-    email: siteConfig.email,
-    telephone: siteConfig.phone,
+    ...(siteConfig.email ? { email: siteConfig.email } : {}),
+    ...(telephones.length ? { telephone: telephones } : {}),
     address: {
       "@type": "PostalAddress",
       streetAddress: siteConfig.address.streetAddress,
@@ -33,13 +37,7 @@ export function StructuredData() {
     ],
     knowsAbout: siteConfig.services,
     serviceType: siteConfig.services,
-    sameAs: [
-      "https://www.linkedin.com",
-      "https://www.instagram.com",
-      "https://www.facebook.com",
-      "https://www.pinterest.com",
-      "https://www.tiktok.com",
-    ],
+    ...(siteConfig.sameAs.length ? { sameAs: siteConfig.sameAs } : {}),
   };
 
   return (
