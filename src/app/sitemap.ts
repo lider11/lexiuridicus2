@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { staticBlogArticles } from "@/lib/blog-static";
 import { query } from "@/lib/db";
 import { servicePages } from "@/lib/services";
 import { siteConfig } from "@/lib/site";
@@ -42,6 +43,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
+      path: "/sobre-lex-iuridicus",
+      priority: 0.75,
+    },
+    {
       path: "/politica-de-datos",
       priority: 0.35,
     },
@@ -59,6 +64,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
+  const staticPostEntries = staticBlogArticles.map((post) => ({
+    url: `${siteConfig.url}/blog/${post.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   return [
     ...pages.map((page) => ({
@@ -69,6 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: page.priority,
     })),
     ...serviceEntries,
+    ...staticPostEntries,
     ...postEntries,
   ];
 }

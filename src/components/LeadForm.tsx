@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { servicePages } from "@/lib/services";
 
 export function LeadForm() {
   const [message, setMessage] = useState("");
@@ -122,9 +123,11 @@ export function LeadForm() {
             <option disabled value="">
               Selecciona un servicio
             </option>
-            <option value="Gobierno corporativo">Gobierno corporativo</option>
-            <option value="Tradicion de acciones">Tradicion de acciones</option>
-            <option value="Imagen empresarial">Imagen empresarial</option>
+            {servicePages.map((service) => (
+              <option key={service.slug} value={service.title}>
+                {service.title}
+              </option>
+            ))}
           </select>
         </label>
         <label>
@@ -144,6 +147,15 @@ export function LeadForm() {
             </option>
             <option value="Revisar estructura actual">
               Revisar estructura actual
+            </option>
+            <option value="Fortalecer contratos comerciales">
+              Fortalecer contratos comerciales
+            </option>
+            <option value="Recuperar cartera empresarial">
+              Recuperar cartera empresarial
+            </option>
+            <option value="Prevenir riesgos de cumplimiento">
+              Prevenir riesgos de cumplimiento
             </option>
           </select>
         </label>
@@ -180,7 +192,7 @@ export function LeadForm() {
       </button>
       <p className="form-trust">
         Tu informacion se revisa con reserva. Esta solicitud es orientativa y no
-        reemplaza una asesoria juridica personalizada.
+        constituye asesoria juridica ni crea relacion abogado-cliente.
       </p>
       {message ? <div className="message">{message}</div> : null}
       {error ? <div className="error">{error}</div> : null}

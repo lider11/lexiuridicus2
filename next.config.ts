@@ -31,13 +31,16 @@ const securityHeaders = [
         "script-src",
         "'self'",
         "'unsafe-inline'",
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com",
+        "https://www.clarity.ms",
         ...(isProduction ? [] : ["'unsafe-eval'"]),
       ].join(" "),
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data:",
-      "connect-src 'self'",
-      "frame-src 'none'",
+      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.clarity.ms https://*.clarity.ms",
+      "frame-src 'self' https://www.googletagmanager.com",
       "object-src 'none'",
       "frame-ancestors 'none'",
       "base-uri 'self'",
@@ -56,6 +59,21 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: securityHeaders,
+      },
+    ];
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/servicios/tradicion-de-acciones",
+        destination: "/servicios/derecho-societario",
+        permanent: true,
+      },
+      {
+        source: "/servicios/imagen-empresarial",
+        destination: "/servicios/derecho-corporativo",
+        permanent: true,
       },
     ];
   },

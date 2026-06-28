@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { BlogFilterGrid } from "@/components/BlogFilterGrid";
+import { staticBlogArticles } from "@/lib/blog-static";
 import { query } from "@/lib/db";
 import type { BlogPost } from "@/types";
 
@@ -40,11 +41,6 @@ export default async function BlogPage() {
   const posts = await getPosts();
   const featuredPost = posts[0];
   const remainingPosts = featuredPost ? posts.slice(1) : posts;
-  const categories = [
-    "Tradicion de acciones",
-    "Imagen empresarial",
-    "Gobierno corporativo",
-  ];
 
   return (
     <main className="site-shell">
@@ -64,8 +60,10 @@ export default async function BlogPage() {
             className="service-pills blog-category-pills"
             aria-label="Categorias del blog"
           >
-            {categories.map((category) => (
-              <span key={category}>{category}</span>
+            {staticBlogArticles.map((article) => (
+              <Link key={article.slug} href={`/blog/${article.slug}`}>
+                {article.category}
+              </Link>
             ))}
           </div>
           <div className="hero-actions">
@@ -94,27 +92,15 @@ export default async function BlogPage() {
           <h2>Tres rutas para entender mejor tu empresa</h2>
         </div>
         <div className="topic-grid">
-          <article>
-            <strong>Tradicion de acciones</strong>
-            <p>
-              Lecturas para entender titularidad, trazabilidad y riesgos en la
-              propiedad accionaria.
-            </p>
-          </article>
-          <article>
-            <strong>Imagen empresarial</strong>
-            <p>
-              Guias para presentar la empresa con mayor claridad ante
-              inversionistas, aliados o compradores.
-            </p>
-          </article>
-          <article>
-            <strong>Gobierno corporativo</strong>
-            <p>
-              Contenido sobre reglas, roles y decisiones internas para empresas
-              en crecimiento.
-            </p>
-          </article>
+          {staticBlogArticles.map((article) => (
+            <article key={article.slug}>
+              <strong>{article.category}</strong>
+              <p>{article.excerpt}</p>
+              <Link className="related-link" href={`/blog/${article.slug}`}>
+                Leer articulo
+              </Link>
+            </article>
+          ))}
         </div>
       </section>
       <section className="section" id="articulos">

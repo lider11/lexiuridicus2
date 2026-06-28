@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { servicePages } from "@/lib/services";
+import { siteConfig } from "@/lib/site";
 
 export function Header() {
   return (
@@ -18,17 +20,16 @@ export function Header() {
             Servicios
           </Link>
           <div className="nav-service-menu" aria-label="Servicios principales">
-            <Link href="/servicios/tradicion-de-acciones">
-              Tradicion de acciones
-            </Link>
-            <Link href="/servicios/imagen-empresarial">Imagen empresarial</Link>
-            <Link href="/servicios/gobierno-corporativo">
-              Gobierno corporativo
-            </Link>
+            {servicePages.slice(0, 6).map((service) => (
+              <Link key={service.slug} href={`/servicios/${service.slug}`}>
+                {service.title}
+              </Link>
+            ))}
           </div>
         </div>
         <Link href="/metodo">Metodo</Link>
         <Link href="/para-quien-es">Para quien es</Link>
+        <Link href="/sobre-lex-iuridicus">Sobre</Link>
         <Link href="/blog">Blog</Link>
         <span className="nav-divider" aria-hidden="true" />
         <Link className="nav-admin" href="/admin">
@@ -37,6 +38,9 @@ export function Header() {
         <Link className="nav-cta" href="/#consulta">
           Solicitar diagnostico
         </Link>
+        <a className="nav-whatsapp" href={siteConfig.whatsappHref}>
+          WhatsApp
+        </a>
       </nav>
     </header>
   );

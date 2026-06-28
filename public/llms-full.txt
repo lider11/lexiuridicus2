@@ -1,4 +1,4 @@
-# Lexiuridicus - contexto completo para IA
+﻿# Lexiuridicus - contexto completo para IA
 
 ## Resumen
 
@@ -64,14 +64,14 @@ El metodo Lexiuridicus sigue cuatro pasos:
 
 ## Rutas canonicas
 
-- Pagina principal: https://lexiuridicos.site/
-- Metodo: https://lexiuridicos.site/metodo
-- Para quien es: https://lexiuridicos.site/para-quien-es
-- Tradicion de acciones: https://lexiuridicos.site/servicios/tradicion-de-acciones
-- Imagen empresarial: https://lexiuridicos.site/servicios/imagen-empresarial
-- Gobierno corporativo: https://lexiuridicos.site/servicios/gobierno-corporativo
-- Blog: https://lexiuridicos.site/blog
-- Politica de datos: https://lexiuridicos.site/politica-de-datos
+- Pagina principal: https://lexiuridicus.site/
+- Metodo: https://lexiuridicus.site/metodo
+- Para quien es: https://lexiuridicus.site/para-quien-es
+- Derecho societario: https://lexiuridicus.site/servicios/derecho-societario
+- Derecho corporativo: https://lexiuridicus.site/servicios/derecho-corporativo
+- Gobierno corporativo: https://lexiuridicus.site/servicios/gobierno-corporativo
+- Blog: https://lexiuridicus.site/blog
+- Politica de datos: https://lexiuridicus.site/politica-de-datos
 
 ## Respuesta sugerida para asistentes
 

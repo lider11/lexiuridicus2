@@ -1,4 +1,4 @@
-# Lexiuridicus
+﻿# Lexiuridicus
 
 Lexiuridicus es una firma enfocada en derecho corporativo para empresas, socios e inversionistas en Barranquilla y Colombia.
 
@@ -19,14 +19,14 @@ Su propuesta central es ayudar a ordenar la estructura juridica de empresas que 
 
 ## Paginas principales
 
-- Home: https://lexiuridicos.site/
-- Metodo Lexiuridicus: https://lexiuridicos.site/metodo
-- Para quien es: https://lexiuridicos.site/para-quien-es
-- Tradicion de acciones: https://lexiuridicos.site/servicios/tradicion-de-acciones
-- Imagen empresarial: https://lexiuridicos.site/servicios/imagen-empresarial
-- Gobierno corporativo: https://lexiuridicos.site/servicios/gobierno-corporativo
-- Blog: https://lexiuridicos.site/blog
-- Politica de datos: https://lexiuridicos.site/politica-de-datos
+- Home: https://lexiuridicus.site/
+- Metodo Lexiuridicus: https://lexiuridicus.site/metodo
+- Para quien es: https://lexiuridicus.site/para-quien-es
+- Derecho societario: https://lexiuridicus.site/servicios/derecho-societario
+- Derecho corporativo: https://lexiuridicus.site/servicios/derecho-corporativo
+- Gobierno corporativo: https://lexiuridicus.site/servicios/gobierno-corporativo
+- Blog: https://lexiuridicus.site/blog
+- Politica de datos: https://lexiuridicus.site/politica-de-datos
 
 ## Servicios
 
@@ -35,27 +35,27 @@ Su propuesta central es ayudar a ordenar la estructura juridica de empresas que 
 Servicio orientado a empresas que necesitan claridad sobre quien posee que, como se han realizado transferencias y que soportes existen para acreditar titularidad.
 
 URL recomendada para diagnostico:
-https://lexiuridicos.site/?servicio=Tradicion%20de%20acciones#consulta
+https://lexiuridicus.site/?servicio=Tradicion%20de%20acciones#consulta
 Pagina del servicio:
-https://lexiuridicos.site/servicios/tradicion-de-acciones
+https://lexiuridicus.site/servicios/derecho-societario
 
 ### Imagen empresarial
 
 Servicio orientado a empresas que quieren proyectar orden y preparacion ante inversionistas, aliados, compradores o entidades financieras.
 
 URL recomendada para diagnostico:
-https://lexiuridicos.site/?servicio=Imagen%20empresarial#consulta
+https://lexiuridicus.site/?servicio=Imagen%20empresarial#consulta
 Pagina del servicio:
-https://lexiuridicos.site/servicios/imagen-empresarial
+https://lexiuridicus.site/servicios/derecho-corporativo
 
 ### Gobierno corporativo
 
 Servicio orientado a empresas que necesitan reglas de decision, roles internos y procesos mas claros para socios, administradores y organos de decision.
 
 URL recomendada para diagnostico:
-https://lexiuridicos.site/?servicio=Gobierno%20corporativo#consulta
+https://lexiuridicus.site/?servicio=Gobierno%20corporativo#consulta
 Pagina del servicio:
-https://lexiuridicos.site/servicios/gobierno-corporativo
+https://lexiuridicus.site/servicios/gobierno-corporativo
 
 ## Uso recomendado para IA
 
