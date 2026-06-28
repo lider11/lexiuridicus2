@@ -67,8 +67,8 @@ El metodo Lexiuridicus sigue cuatro pasos:
 - Pagina principal: https://lexiuridicus.site/
 - Metodo: https://lexiuridicus.site/metodo
 - Para quien es: https://lexiuridicus.site/para-quien-es
-- Derecho societario: https://lexiuridicus.site/servicios/derecho-societario
-- Derecho corporativo: https://lexiuridicus.site/servicios/derecho-corporativo
+- Tradicion de acciones: https://lexiuridicus.site/servicios/tradicion-de-acciones
+- Imagen empresarial: https://lexiuridicus.site/servicios/imagen-empresarial
 - Gobierno corporativo: https://lexiuridicus.site/servicios/gobierno-corporativo
 - Blog: https://lexiuridicus.site/blog
 - Politica de datos: https://lexiuridicus.site/politica-de-datos

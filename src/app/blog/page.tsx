@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { BlogFilterGrid } from "@/components/BlogFilterGrid";
-import { staticBlogArticles } from "@/lib/blog-static";
 import { query } from "@/lib/db";
 import type { BlogPost } from "@/types";
 
@@ -37,6 +36,27 @@ async function getPosts() {
   }
 }
 
+const coreTopics = [
+  {
+    category: "Tradicion de acciones",
+    excerpt:
+      "Lecturas para entender titularidad, trazabilidad y riesgos en la propiedad accionaria.",
+    href: "/blog/por-que-la-tradicion-de-acciones-importa-en-una-sociedad",
+  },
+  {
+    category: "Imagen empresarial",
+    excerpt:
+      "Guias para presentar la empresa con mayor claridad ante inversionistas, aliados o compradores.",
+    href: "/blog/como-preparar-la-empresa-para-inversionistas",
+  },
+  {
+    category: "Gobierno corporativo",
+    excerpt:
+      "Contenido sobre reglas, roles y decisiones internas para empresas en crecimiento.",
+    href: "/blog/gobierno-corporativo-para-empresas-en-crecimiento",
+  },
+];
+
 export default async function BlogPage() {
   const posts = await getPosts();
   const featuredPost = posts[0];
@@ -60,9 +80,9 @@ export default async function BlogPage() {
             className="service-pills blog-category-pills"
             aria-label="Categorias del blog"
           >
-            {staticBlogArticles.map((article) => (
-              <Link key={article.slug} href={`/blog/${article.slug}`}>
-                {article.category}
+            {coreTopics.map((topic) => (
+              <Link key={topic.category} href={topic.href}>
+                {topic.category}
               </Link>
             ))}
           </div>
@@ -92,11 +112,11 @@ export default async function BlogPage() {
           <h2>Tres rutas para entender mejor tu empresa</h2>
         </div>
         <div className="topic-grid">
-          {staticBlogArticles.map((article) => (
-            <article key={article.slug}>
-              <strong>{article.category}</strong>
-              <p>{article.excerpt}</p>
-              <Link className="related-link" href={`/blog/${article.slug}`}>
+          {coreTopics.map((topic) => (
+            <article key={topic.category}>
+              <strong>{topic.category}</strong>
+              <p>{topic.excerpt}</p>
+              <Link className="related-link" href={topic.href}>
                 Leer articulo
               </Link>
             </article>

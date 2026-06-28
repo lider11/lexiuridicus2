@@ -148,15 +148,6 @@ export function LeadForm() {
             <option value="Revisar estructura actual">
               Revisar estructura actual
             </option>
-            <option value="Fortalecer contratos comerciales">
-              Fortalecer contratos comerciales
-            </option>
-            <option value="Recuperar cartera empresarial">
-              Recuperar cartera empresarial
-            </option>
-            <option value="Prevenir riesgos de cumplimiento">
-              Prevenir riesgos de cumplimiento
-            </option>
           </select>
         </label>
         <label>

@@ -68,8 +68,8 @@ export default function AboutPage() {
           <h2>Una firma orientada a proteger empresas en crecimiento.</h2>
           <p>
             Nuestra mision es brindar asesoria juridica empresarial clara,
-            preventiva y util para proteger decisiones, contratos, relaciones
-            societarias y patrimonio corporativo.
+            preventiva y util para proteger decisiones societarias, propiedad
+            accionaria, imagen empresarial y gobierno corporativo.
           </p>
           <p>
             Nuestra vision es consolidar una plataforma juridica de referencia
@@ -90,7 +90,7 @@ export default function AboutPage() {
             <strong>Perfil de firma</strong>
             <p>
               Practica juridica corporativa enfocada en derecho societario,
-              contratos comerciales, gobierno corporativo, cartera, compliance y
+              tradicion de acciones, imagen empresarial, gobierno corporativo y
               empresa familiar.
             </p>
           </div>

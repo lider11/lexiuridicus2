@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Inteligencia Juridica para Empresas que Crecen",
     description:
-      "Asesoria juridica empresarial en Colombia para derecho corporativo, derecho societario, contratos comerciales, gobierno corporativo y recuperacion de cartera.",
+      "Diagnostico juridico empresarial para tradicion de acciones, imagen empresarial y gobierno corporativo.",
     url: "/",
     type: "website",
   },
@@ -32,16 +32,16 @@ const trustPoints = [
 
 const successCases = [
   "Estructuracion juridica de empresa familiar.",
-  "Recuperacion estrategica de cartera comercial.",
-  "Diseno de contratos comerciales de alto impacto.",
+  "Organizacion de soportes de tradicion de acciones.",
+  "Preparacion juridica para conversacion con inversionistas.",
   "Acompanamiento en conflicto societario.",
 ];
 
 const checklistItems = [
-  "Contratos comerciales y obligaciones criticas",
-  "Socios, acciones, estatutos y actas",
-  "Cartera vencida y soportes de cobro",
-  "Gobierno corporativo y toma de decisiones",
+  "Titularidad, transferencias y soportes accionarios",
+  "Actas, estatutos y decisiones de socios",
+  "Imagen juridica ante inversionistas o aliados",
+  "Gobierno corporativo y reglas internas",
 ];
 
 export default function Home() {
@@ -62,9 +62,8 @@ export default function Home() {
           </p>
 
           <div className="service-pills" aria-label="Areas principales">
-            <span>Derecho corporativo</span>
-            <span>Derecho societario</span>
-            <span>Contratos comerciales</span>
+            <span>Tradicion de acciones</span>
+            <span>Imagen empresarial</span>
             <span>Gobierno corporativo</span>
           </div>
 
@@ -106,8 +105,9 @@ export default function Home() {
             Protege juridicamente tu empresa antes de que el riesgo escale.
           </h2>
           <p>
-            La prevencion juridica ayuda a ordenar contratos, socios, cartera,
-            gobierno interno y decisiones sensibles antes de una crisis.
+            La prevencion juridica ayuda a ordenar propiedad accionaria, imagen
+            empresarial, gobierno interno y decisiones sensibles antes de una
+            crisis.
           </p>
         </div>
 
@@ -120,17 +120,17 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <strong>Contratos que no cubren la operacion</strong>
+            <strong>Imagen empresarial poco preparada</strong>
             <p>
-              Ambiguedades sobre pagos, obligaciones, garantias o terminacion
-              generan disputas evitables.
+              Documentos, narrativa y soportes dispersos reducen confianza ante
+              inversionistas, aliados o compradores.
             </p>
           </div>
           <div>
-            <strong>Cartera y conflictos empresariales</strong>
+            <strong>Gobierno interno informal</strong>
             <p>
-              La falta de estrategia y soportes reduce la probabilidad de
-              recuperar cartera o resolver controversias.
+              Roles, organos y procesos de decision poco definidos generan
+              incertidumbre entre socios y administradores.
             </p>
           </div>
         </div>
@@ -139,7 +139,9 @@ export default function Home() {
       <section className="section" id="servicios">
         <div className="section-heading">
           <span className="eyebrow">Servicios juridicos</span>
-          <h2>Asesoria juridica empresarial para decisiones relevantes</h2>
+          <h2>
+            Tres frentes para ordenar empresas con socios e inversionistas
+          </h2>
           <p>
             Cada servicio combina diagnostico, estrategia y documentacion para
             que la empresa actue con mayor claridad.
@@ -245,7 +247,7 @@ export default function Home() {
           <h2>Checklist Juridico para Empresas</h2>
           <p>
             Descarga una guia basica para identificar riesgos legales en
-            contratos, sociedades, cartera y gobierno corporativo.
+            acciones, sociedades, imagen empresarial y gobierno corporativo.
           </p>
         </div>
 
@@ -274,7 +276,7 @@ export default function Home() {
           <h2>Agenda una consulta antes de tomar una decision sensible.</h2>
           <p>
             Una revision juridica oportuna ayuda a prevenir conflictos, mejorar
-            contratos y ordenar la estructura de la empresa.
+            la confianza empresarial y ordenar la estructura de decision.
           </p>
         </div>
         <a className="button final-cta-button" href={siteConfig.whatsappHref}>

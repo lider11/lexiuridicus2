@@ -19,15 +19,9 @@ export const siteConfig = {
     addressCountry: "CO",
   },
   services: [
-    "Derecho corporativo",
-    "Derecho societario",
+    "Tradicion de acciones",
+    "Imagen empresarial",
     "Gobierno corporativo",
-    "Contratos comerciales",
-    "Recuperacion de cartera",
-    "Litigios empresariales",
-    "Compliance",
-    "Proteccion patrimonial",
-    "Protocolo de familia empresarial",
   ],
   sameAs: [],
   whatsappHref:

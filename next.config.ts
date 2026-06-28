@@ -62,21 +62,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
-  async redirects() {
-    return [
-      {
-        source: "/servicios/tradicion-de-acciones",
-        destination: "/servicios/derecho-societario",
-        permanent: true,
-      },
-      {
-        source: "/servicios/imagen-empresarial",
-        destination: "/servicios/derecho-corporativo",
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

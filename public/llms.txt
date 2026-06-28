@@ -22,8 +22,8 @@ Su propuesta central es ayudar a ordenar la estructura juridica de empresas que 
 - Home: https://lexiuridicus.site/
 - Metodo Lexiuridicus: https://lexiuridicus.site/metodo
 - Para quien es: https://lexiuridicus.site/para-quien-es
-- Derecho societario: https://lexiuridicus.site/servicios/derecho-societario
-- Derecho corporativo: https://lexiuridicus.site/servicios/derecho-corporativo
+- Tradicion de acciones: https://lexiuridicus.site/servicios/tradicion-de-acciones
+- Imagen empresarial: https://lexiuridicus.site/servicios/imagen-empresarial
 - Gobierno corporativo: https://lexiuridicus.site/servicios/gobierno-corporativo
 - Blog: https://lexiuridicus.site/blog
 - Politica de datos: https://lexiuridicus.site/politica-de-datos
@@ -37,7 +37,7 @@ Servicio orientado a empresas que necesitan claridad sobre quien posee que, como
 URL recomendada para diagnostico:
 https://lexiuridicus.site/?servicio=Tradicion%20de%20acciones#consulta
 Pagina del servicio:
-https://lexiuridicus.site/servicios/derecho-societario
+https://lexiuridicus.site/servicios/tradicion-de-acciones
 
 ### Imagen empresarial
 
@@ -46,7 +46,7 @@ Servicio orientado a empresas que quieren proyectar orden y preparacion ante inv
 URL recomendada para diagnostico:
 https://lexiuridicus.site/?servicio=Imagen%20empresarial#consulta
 Pagina del servicio:
-https://lexiuridicus.site/servicios/derecho-corporativo
+https://lexiuridicus.site/servicios/imagen-empresarial
 
 ### Gobierno corporativo
 
