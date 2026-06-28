@@ -1,19 +1,12 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/BrandLogo";
 import { servicePages } from "@/lib/services";
 import { siteConfig } from "@/lib/site";
 
 export function Header() {
   return (
     <header className="topbar">
-      <Link className="brand" href="/">
-        <span className="brand-mark">
-          <span>LX</span>
-        </span>
-        <span className="brand-copy">
-          <strong>lexiuridicus</strong>
-          <small>Seriedad, claridad, decisiones</small>
-        </span>
-      </Link>
+      <BrandLogo />
       <nav className="nav" aria-label="Principal">
         <div className="nav-service-group">
           <Link className="nav-service-root" href="/#servicios">

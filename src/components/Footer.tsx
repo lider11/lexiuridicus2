@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/BrandLogo";
 import { servicePages } from "@/lib/services";
 import { siteConfig } from "@/lib/site";
 
@@ -6,11 +7,8 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-brand">
-        <span className="brand-mark">
-          <span>LX</span>
-        </span>
+        <BrandLogo href="" />
         <div>
-          <strong>Lex Iuridicus</strong>
           <p>
             Inteligencia juridica para empresas que crecen con seriedad,
             claridad y mejores decisiones.

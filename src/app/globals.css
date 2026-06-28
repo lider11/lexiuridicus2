@@ -1,20 +1,22 @@
 :root {
   --ink: #15191f;
-  --muted: #5f6d73;
-  --line: #d8d4c6;
-  --paper: #f6f0e4;
+  --muted: #5e6972;
+  --line: #d9d2c3;
+  --paper: #f6f1e8;
   --panel: #ffffff;
-  --brand: #266a22;
-  --brand-strong: #123a18;
-  --brand-deep: #0a2410;
-  --brand-soft: #d9e6d7;
-  --accent: #d0a443;
-  --accent-soft: #fff2c9;
-  --mint: #d9e6d7;
-  --peach: #f4dfcf;
-  --sky: #dbe9ef;
-  --success: #266a22;
+  --brand: #16385f;
+  --brand-strong: #0d1b2a;
+  --brand-deep: #07111d;
+  --brand-soft: #e8edf3;
+  --accent: #c59d5f;
+  --accent-soft: #f7ead2;
+  --mint: #e8edf3;
+  --peach: #f3e3cf;
+  --sky: #dbe6ef;
+  --success: #1f6f50;
   --danger: #a54646;
+  --graphite: #3a3a3a;
+  --serif: Georgia, "Times New Roman", serif;
   --mono:
     "Ubuntu Mono", "Cascadia Mono", "SFMono-Regular", Consolas,
     "Liberation Mono", monospace;
@@ -113,8 +115,10 @@ textarea {
 
 .topbar {
   align-items: center;
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(197, 157, 95, 0.08), transparent 42%),
+    var(--brand-strong);
+  border-bottom: 1px solid rgba(197, 157, 95, 0.38);
   display: flex;
   gap: 24px;
   justify-content: space-between;
@@ -122,7 +126,7 @@ textarea {
   position: sticky;
   top: 0;
   z-index: 20;
-  box-shadow: 0 14px 34px rgba(18, 58, 24, 0.08);
+  box-shadow: 0 18px 36px rgba(7, 17, 29, 0.22);
 }
 
 .brand {
@@ -130,19 +134,20 @@ textarea {
   display: flex;
   gap: 12px;
   font-weight: 800;
-  min-width: 260px;
+  min-width: 330px;
 }
 
 .brand-mark {
   align-items: center;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 36%),
-    linear-gradient(135deg, var(--brand-strong), var(--brand));
-  border: 1px solid rgba(208, 164, 67, 0.7);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 42%),
+    var(--brand-deep);
+  border: 2px solid var(--accent);
+  border-radius: 0 0 12px 12px;
   box-shadow:
-    inset 0 -8px 0 rgba(208, 164, 67, 0.18),
-    0 10px 22px rgba(18, 58, 24, 0.16);
-  color: white;
+    inset 0 -8px 0 rgba(197, 157, 95, 0.12),
+    0 10px 22px rgba(7, 17, 29, 0.22);
+  color: var(--accent);
   display: inline-flex;
   height: 46px;
   justify-content: center;
@@ -151,22 +156,32 @@ textarea {
   width: 46px;
 }
 
-.brand-mark::after {
+.brand-mark::before {
   background: var(--accent);
-  bottom: 8px;
   content: "";
   height: 2px;
-  left: 10px;
+  left: 11px;
   position: absolute;
-  right: 10px;
+  right: 11px;
+  top: 12px;
+}
+
+.brand-mark::after {
+  background: var(--accent);
+  bottom: 9px;
+  content: "";
+  height: 2px;
+  left: 14px;
+  position: absolute;
+  right: 14px;
 }
 
 .brand-mark span {
-  font-family: var(--mono);
-  font-size: 0.98rem;
+  font-family: var(--serif);
+  font-size: 1.45rem;
   font-weight: 900;
   line-height: 1;
-  transform: translateY(-2px);
+  transform: translateY(0);
 }
 
 .brand-copy {
@@ -176,16 +191,18 @@ textarea {
 }
 
 .brand-copy strong {
-  color: var(--brand-strong);
-  font-family: var(--mono);
-  font-size: 1.16rem;
-  letter-spacing: 0;
+  color: #fffaf0;
+  font-family: var(--serif);
+  font-size: 1.42rem;
+  letter-spacing: 0.04em;
 }
 
 .brand-copy small {
-  color: var(--muted);
-  font-size: 0.74rem;
+  color: var(--accent);
+  font-size: 0.72rem;
   font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .nav {
@@ -212,22 +229,22 @@ textarea {
 
 .nav a {
   border-color: transparent;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.78);
   font-weight: 800;
   min-height: 38px;
   padding: 8px 10px;
 }
 
 .nav a:hover {
-  background: var(--mint);
-  color: var(--brand-strong);
+  background: rgba(255, 255, 255, 0.09);
+  color: white;
 }
 
 .nav-service-menu {
   background: rgba(255, 255, 255, 0.98);
   border: 1px solid var(--line);
   border-radius: 8px;
-  box-shadow: 0 18px 44px rgba(18, 58, 24, 0.14);
+  box-shadow: 0 18px 44px rgba(13, 27, 42, 0.14);
   display: grid;
   gap: 4px;
   left: 0;
@@ -246,9 +263,15 @@ textarea {
 
 .nav-service-menu a {
   border-color: transparent;
+  color: var(--brand-strong);
   justify-content: flex-start;
   min-height: 38px;
   width: 100%;
+}
+
+.nav-service-menu a:hover {
+  background: var(--brand-soft);
+  color: var(--brand-strong);
 }
 
 .nav-service-group:hover .nav-service-menu,
@@ -259,30 +282,31 @@ textarea {
 }
 
 .nav .nav-admin {
-  border-color: var(--line);
-  color: var(--muted);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.78);
   font-size: 0.88rem;
   min-height: 36px;
   padding-inline: 10px;
 }
 
 .nav .nav-cta {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: white;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--brand-strong);
+  font-weight: 900;
   margin-left: 4px;
   padding-inline: 16px;
 }
 
 .nav .nav-cta:hover {
-  background: var(--brand-strong);
-  color: white;
+  background: #d8b678;
+  color: var(--brand-strong);
 }
 
 .nav .nav-whatsapp {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--brand-strong);
+  background: transparent;
+  border-color: rgba(197, 157, 95, 0.72);
+  color: #fffaf0;
   font-weight: 900;
   margin-left: 4px;
   padding-inline: 14px;
@@ -335,10 +359,10 @@ textarea {
   background:
     linear-gradient(
       90deg,
-      rgba(10, 36, 16, 0.96) 0%,
-      rgba(18, 58, 24, 0.86) 42%,
-      rgba(38, 106, 34, 0.34) 72%,
-      rgba(10, 36, 16, 0.26) 100%
+      rgba(7, 17, 29, 0.96) 0%,
+      rgba(13, 27, 42, 0.86) 42%,
+      rgba(22, 56, 95, 0.34) 72%,
+      rgba(7, 17, 29, 0.26) 100%
     ),
     url("/images/lexiuridicus-hero-boardroom.png");
   background-position: center;
@@ -506,7 +530,7 @@ p {
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(18px);
   border-color: rgba(208, 164, 67, 0.45);
-  box-shadow: 0 34px 90px rgba(10, 36, 16, 0.34);
+  box-shadow: 0 34px 90px rgba(7, 17, 29, 0.34);
   color: var(--ink);
   padding: 26px;
 }
@@ -605,7 +629,7 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: var(--brand);
-  box-shadow: 0 0 0 3px rgba(38, 106, 34, 0.16);
+  box-shadow: 0 0 0 3px rgba(22, 56, 95, 0.16);
   outline: none;
 }
 
@@ -623,8 +647,8 @@ textarea {
   background:
     linear-gradient(
       110deg,
-      rgba(10, 36, 16, 0.96) 0%,
-      rgba(18, 58, 24, 0.9) 48%,
+      rgba(7, 17, 29, 0.96) 0%,
+      rgba(13, 27, 42, 0.9) 48%,
       rgba(208, 164, 67, 0.26) 100%
     ),
     url("/images/lexiuridicus-hero-boardroom.png");
@@ -665,7 +689,7 @@ textarea {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(208, 164, 67, 0.52);
   border-radius: 8px;
-  box-shadow: 0 30px 80px rgba(10, 36, 16, 0.32);
+  box-shadow: 0 30px 80px rgba(7, 17, 29, 0.32);
   display: grid;
   gap: 14px;
   padding: clamp(22px, 4vw, 34px);
@@ -695,7 +719,7 @@ textarea {
   background: var(--panel);
   border: 1px solid rgba(208, 164, 67, 0.36);
   border-radius: 8px;
-  box-shadow: 0 12px 30px rgba(18, 58, 24, 0.07);
+  box-shadow: 0 12px 30px rgba(13, 27, 42, 0.07);
   display: grid;
   gap: 10px;
   padding: 20px;
@@ -755,9 +779,9 @@ textarea {
   background:
     linear-gradient(
       115deg,
-      rgba(10, 36, 16, 0.96) 0%,
-      rgba(18, 58, 24, 0.88) 48%,
-      rgba(38, 106, 34, 0.45) 100%
+      rgba(7, 17, 29, 0.96) 0%,
+      rgba(13, 27, 42, 0.88) 48%,
+      rgba(22, 56, 95, 0.45) 100%
     ),
     url("/images/lexiuridicus-hero-boardroom.png");
   background-position: center;
@@ -797,7 +821,7 @@ textarea {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(208, 164, 67, 0.52);
   border-radius: 8px;
-  box-shadow: 0 30px 80px rgba(10, 36, 16, 0.32);
+  box-shadow: 0 30px 80px rgba(7, 17, 29, 0.32);
   display: grid;
   gap: 14px;
   padding: clamp(22px, 4vw, 34px);
@@ -828,7 +852,7 @@ textarea {
   border: 1px solid rgba(208, 164, 67, 0.36);
   border-top: 4px solid var(--accent);
   border-radius: 8px;
-  box-shadow: 0 12px 30px rgba(18, 58, 24, 0.07);
+  box-shadow: 0 12px 30px rgba(13, 27, 42, 0.07);
   padding: 20px;
 }
 
@@ -1108,8 +1132,8 @@ textarea {
 .method-steps article:hover,
 .audience-fit-grid article:hover,
 .comment-card:hover {
-  border-color: rgba(38, 106, 34, 0.34);
-  box-shadow: 0 18px 42px rgba(18, 58, 24, 0.12);
+  border-color: rgba(22, 56, 95, 0.34);
+  box-shadow: 0 18px 42px rgba(13, 27, 42, 0.12);
   transform: translateY(-3px);
 }
 
@@ -1414,7 +1438,7 @@ summary {
 
 .category-filter button:hover {
   border-color: var(--brand);
-  box-shadow: 0 8px 18px rgba(18, 58, 24, 0.1);
+  box-shadow: 0 8px 18px rgba(13, 27, 42, 0.1);
   transform: translateY(-1px);
 }
 
@@ -1873,9 +1897,9 @@ summary {
 
 .floating-whatsapp {
   align-items: center;
-  background: #1f7a35;
+  background: #16385f;
   border: 1px solid rgba(255, 255, 255, 0.28);
-  box-shadow: 0 18px 42px rgba(10, 36, 16, 0.26);
+  box-shadow: 0 18px 42px rgba(7, 17, 29, 0.26);
   color: white;
   display: inline-flex;
   font-weight: 900;
@@ -1895,7 +1919,7 @@ summary {
 .chatbot-toggle {
   background: var(--brand-strong);
   border: 1px solid rgba(208, 164, 67, 0.62);
-  box-shadow: 0 18px 42px rgba(10, 36, 16, 0.28);
+  box-shadow: 0 18px 42px rgba(7, 17, 29, 0.28);
   color: white;
   cursor: pointer;
   font-weight: 900;
@@ -1913,7 +1937,7 @@ summary {
   border: 1px solid rgba(208, 164, 67, 0.48);
   border-radius: 8px;
   bottom: 62px;
-  box-shadow: 0 24px 70px rgba(10, 36, 16, 0.28);
+  box-shadow: 0 24px 70px rgba(7, 17, 29, 0.28);
   display: grid;
   gap: 12px;
   max-height: min(620px, calc(100vh - 96px));
@@ -1957,7 +1981,7 @@ summary {
 .chatbot-close {
   align-items: center;
   background: var(--brand-soft);
-  border: 1px solid rgba(38, 106, 34, 0.2);
+  border: 1px solid rgba(22, 56, 95, 0.2);
   color: var(--brand-strong);
   cursor: pointer;
   display: inline-flex;
@@ -2004,7 +2028,7 @@ summary {
 
 .chatbot-message-actions a {
   background: white;
-  border: 1px solid rgba(38, 106, 34, 0.24);
+  border: 1px solid rgba(22, 56, 95, 0.24);
   color: var(--brand-strong);
   display: inline-flex;
   font-size: 0.8rem;
@@ -2112,7 +2136,7 @@ summary {
 /* Current topic indicator inside chatbot */
 .chatbot-topic-pill {
   background: var(--brand-soft);
-  border: 1px solid rgba(38, 106, 34, 0.18);
+  border: 1px solid rgba(22, 56, 95, 0.18);
   border-radius: 999px;
   color: var(--brand-strong);
   font-size: 0.72rem;

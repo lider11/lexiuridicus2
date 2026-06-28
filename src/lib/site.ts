@@ -6,7 +6,7 @@ export const siteConfig = {
   legalName: "Lex Iuridicus",
   url: siteUrl,
   description:
-    "Firma juridica corporativa en Colombia para empresas que necesitan asesoria societaria, contractual, comercial, de gobierno corporativo y prevencion de riesgos.",
+    "Firma juridica corporativa en Colombia para empresas que necesitan claridad en tradicion de acciones, imagen empresarial y gobierno corporativo.",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contacto@lexiuridicus.com",
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+57 301 237 0047",
   additionalPhones: [

@@ -60,7 +60,6 @@ const coreTopics = [
 export default async function BlogPage() {
   const posts = await getPosts();
   const featuredPost = posts[0];
-  const remainingPosts = featuredPost ? posts.slice(1) : posts;
 
   return (
     <main className="site-shell">
