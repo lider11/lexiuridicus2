@@ -128,7 +128,7 @@ export default async function BlogPage() {
           <span className="eyebrow">Articulos recientes</span>
           <h2>Contenido para decisiones societarias mejor informadas</h2>
         </div>
-        <BlogFilterGrid posts={remainingPosts} />
+        <BlogFilterGrid posts={posts} />
       </section>
       <section className="section final-cta">
         <div>
