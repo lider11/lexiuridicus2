@@ -23,6 +23,7 @@ export function Footer() {
           <p>Telefono: {siteConfig.phone}</p>
           <p>Correo: {siteConfig.email}</p>
           <a href={siteConfig.whatsappHref}>Hablar por WhatsApp</a>
+          <a href={siteConfig.facebookHref}>Facebook</a>
         </div>
 
         <div>

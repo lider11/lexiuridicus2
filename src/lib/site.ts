@@ -23,7 +23,8 @@ export const siteConfig = {
     "Imagen empresarial",
     "Gobierno corporativo",
   ],
-  sameAs: [],
+  facebookHref: "https://www.facebook.com/profile.php?id=61591705700979",
+  sameAs: ["https://www.facebook.com/profile.php?id=61591705700979"],
   whatsappHref:
     process.env.NEXT_PUBLIC_WHATSAPP_URL ||
     "https://wa.me/573012370047?text=Hola%20Lex%20Iuridicus%2C%20quiero%20solicitar%20un%20diagnostico%20juridico.",
