@@ -6,6 +6,7 @@ import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { StructuredData } from "@/components/StructuredData";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
+import "./mobile-header.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
