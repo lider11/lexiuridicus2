@@ -7,8 +7,12 @@ const unsafeAdminTokens = new Set([
 ]);
 const recommendedProductionTokenLength = 32;
 
+function normalizeAdminToken(token: string | null | undefined) {
+  return token?.trim() || "";
+}
+
 function isSecureAdminToken(token: string | undefined) {
-  const normalizedToken = token?.trim() || "";
+  const normalizedToken = normalizeAdminToken(token);
 
   if (unsafeAdminTokens.has(normalizedToken)) {
     return false;
@@ -25,8 +29,8 @@ function isSecureAdminToken(token: string | undefined) {
 }
 
 export function isAdminRequest(request: Request) {
-  const configuredToken = process.env.ADMIN_TOKEN;
-  const providedToken = request.headers.get("x-admin-token");
+  const configuredToken = normalizeAdminToken(process.env.ADMIN_TOKEN);
+  const providedToken = normalizeAdminToken(request.headers.get("x-admin-token"));
 
   return Boolean(
     isSecureAdminToken(configuredToken) &&
