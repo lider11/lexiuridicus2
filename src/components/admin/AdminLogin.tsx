@@ -1,14 +1,18 @@
 ﻿import type { FormEvent } from "react";
 
 type AdminLoginProps = {
-  tokenInput: string;
-  onTokenInputChange: (value: string) => void;
+  email: string;
+  password: string;
+  onEmailChange: (value: string) => void;
+  onPasswordChange: (value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export function AdminLogin({
-  tokenInput,
-  onTokenInputChange,
+  email,
+  password,
+  onEmailChange,
+  onPasswordChange,
   onSubmit,
 }: AdminLoginProps) {
   return (
@@ -17,19 +21,30 @@ export function AdminLogin({
         <span className="eyebrow">Acceso interno</span>
         <h2>Ingresa al panel administrativo</h2>
         <p>
-          Usa el token configurado en el archivo `.env` para proteger clientes,
-          blog y comentarios.
+          Usa tu cuenta individual. El acceso se limita a tu organización y a
+          los permisos asignados.
         </p>
       </div>
 
       <form className="form-grid" onSubmit={onSubmit}>
         <label>
-          Token de administrador
+          Correo electrónico
           <input
-            onChange={(event) => onTokenInputChange(event.target.value)}
-            placeholder="ADMIN_TOKEN"
+            autoComplete="username"
+            onChange={(event) => onEmailChange(event.target.value)}
+            placeholder="nombre@lexiuridicus.site"
+            type="email"
+            value={email}
+          />
+        </label>
+
+        <label>
+          Contraseña
+          <input
+            autoComplete="current-password"
+            onChange={(event) => onPasswordChange(event.target.value)}
             type="password"
-            value={tokenInput}
+            value={password}
           />
         </label>
 

@@ -1,6 +1,7 @@
 import { ZodError } from "zod";
 import { query } from "@/lib/db";
-import { isAdminRequest, unauthorized } from "@/lib/auth";
+import { requirePermission, unauthorized } from "@/lib/auth";
+import { appendAuditEvent } from "@/lib/audit";
 import { ok, serverError, validationError } from "@/lib/api-response";
 import {
   DeleteCommentSchema,
@@ -9,7 +10,7 @@ import {
 import type { BlogComment } from "@/types";
 
 export async function GET(request: Request) {
-  if (!isAdminRequest(request)) {
+  if (!(await requirePermission(request, "comments:moderate"))) {
     return unauthorized();
   }
 
@@ -29,9 +30,8 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!isAdminRequest(request)) {
-    return unauthorized();
-  }
+  const actor = await requirePermission(request, "comments:moderate");
+  if (!actor) return unauthorized();
 
   try {
     const body = await request.json();
@@ -41,6 +41,12 @@ export async function PATCH(request: Request) {
       payload.status,
       payload.id,
     ]);
+    await appendAuditEvent(request, actor, {
+      action: "comment.status_updated",
+      entityType: "blog_comment",
+      entityId: payload.id,
+      metadata: { status: payload.status },
+    });
 
     return ok();
   } catch (error) {
@@ -53,15 +59,19 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  if (!isAdminRequest(request)) {
-    return unauthorized();
-  }
+  const actor = await requirePermission(request, "comments:moderate");
+  if (!actor) return unauthorized();
 
   try {
     const { searchParams } = new URL(request.url);
     const payload = DeleteCommentSchema.parse({ id: searchParams.get("id") });
 
     await query("DELETE FROM blog_comments WHERE id = ?", [payload.id]);
+    await appendAuditEvent(request, actor, {
+      action: "comment.deleted",
+      entityType: "blog_comment",
+      entityId: payload.id,
+    });
 
     return ok();
   } catch (error) {

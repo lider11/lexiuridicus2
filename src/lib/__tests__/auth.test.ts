@@ -1,41 +1,73 @@
-﻿import { afterEach, describe, expect, it, vi } from "vitest";
-import { isAdminRequest } from "@/lib/auth";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-function adminRequest(token: string) {
+const { queryMock } = vi.hoisted(() => ({ queryMock: vi.fn() }));
+vi.mock("@/lib/db", () => ({ query: queryMock }));
+
+import {
+  authenticateRequest,
+  hashSessionToken,
+  requirePermission,
+} from "@/lib/auth";
+
+function request(token?: string) {
   return new Request("https://lexiuridicus.site/api/clients", {
-    headers: { "x-admin-token": token },
+    headers: token ? { authorization: `Bearer ${token}` } : {},
   });
 }
 
-describe("isAdminRequest", () => {
-  const originalAdminToken = process.env.ADMIN_TOKEN;
+describe("autenticación y autorización", () => {
+  beforeEach(() => queryMock.mockReset());
 
-  afterEach(() => {
-    process.env.ADMIN_TOKEN = originalAdminToken;
-    vi.unstubAllEnvs();
+  it("rechaza solicitudes sin sesión", async () => {
+    await expect(authenticateRequest(request())).resolves.toBeNull();
+    expect(queryMock).not.toHaveBeenCalled();
   });
 
-  it("acepta el token configurado aunque sea mas corto que la recomendacion", () => {
-    process.env.ADMIN_TOKEN = "short-admin-token";
-
-    expect(isAdminRequest(adminRequest("short-admin-token"))).toBe(true);
+  it("rechaza tokens demasiado cortos antes de consultar la base", async () => {
+    await expect(authenticateRequest(request("short"))).resolves.toBeNull();
+    expect(queryMock).not.toHaveBeenCalled();
   });
 
-  it("acepta el token configurado en produccion aunque sea mas corto que la recomendacion", () => {
-    vi.stubEnv("NODE_ENV", "production");
-    process.env.ADMIN_TOKEN = "short-admin-token";
+  it("resuelve usuario, organización, roles y permisos de una sesión activa", async () => {
+    queryMock.mockResolvedValue([
+      {
+        session_id: 8,
+        user_id: 4,
+        organization_id: 2,
+        email: "admin@example.com",
+        roles: "administrator",
+        permissions: "clients:read,clients:write",
+      },
+    ]);
 
-    expect(isAdminRequest(adminRequest("short-admin-token"))).toBe(true);
+    const context = await authenticateRequest(request("a".repeat(48)));
+    expect(context).toMatchObject({
+      userId: 4,
+      organizationId: 2,
+      roles: ["administrator"],
+    });
   });
 
-  it("rechaza tokens de ejemplo aunque coincidan con el encabezado", () => {
-    process.env.ADMIN_TOKEN =
-      "replace-with-a-random-token-of-at-least-32-characters";
+  it("aplica deny-by-default cuando falta el permiso", async () => {
+    queryMock.mockResolvedValue([
+      {
+        session_id: 8,
+        user_id: 4,
+        organization_id: 2,
+        email: "reader@example.com",
+        roles: "reader",
+        permissions: "clients:read",
+      },
+    ]);
 
-    expect(
-      isAdminRequest(
-        adminRequest("replace-with-a-random-token-of-at-least-32-characters"),
-      ),
-    ).toBe(false);
+    await expect(
+      requirePermission(request("b".repeat(48)), "clients:write"),
+    ).resolves.toBeNull();
+  });
+
+  it("no almacena el token de sesión en texto plano", () => {
+    const token = "c".repeat(48);
+    expect(hashSessionToken(token)).not.toContain(token);
+    expect(hashSessionToken(token)).toHaveLength(64);
   });
 });

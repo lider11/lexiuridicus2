@@ -1,5 +1,6 @@
 import { query } from "@/lib/db";
-import { isAdminRequest, unauthorized } from "@/lib/auth";
+import { requirePermission, unauthorized } from "@/lib/auth";
+import { appendAuditEvent } from "@/lib/audit";
 import { ZodError } from "zod";
 import {
   badRequest,
@@ -20,7 +21,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const includeDrafts = searchParams.get("drafts") === "true";
 
-    if (includeDrafts && !isAdminRequest(request)) {
+    if (includeDrafts && !(await requirePermission(request, "posts:write"))) {
       return unauthorized();
     }
 
@@ -40,9 +41,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  if (!isAdminRequest(request)) {
-    return unauthorized();
-  }
+  const actor = await requirePermission(request, "posts:write");
+  if (!actor) return unauthorized();
 
   try {
     const body = await request.json();
@@ -66,6 +66,11 @@ export async function POST(request: Request) {
         post.status,
       ],
     );
+    await appendAuditEvent(request, actor, {
+      action: "post.created",
+      entityType: "blog_post",
+      metadata: { slug: post.slug, status: post.status },
+    });
 
     return created();
   } catch (error) {
@@ -78,9 +83,8 @@ export async function POST(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!isAdminRequest(request)) {
-    return unauthorized();
-  }
+  const actor = await requirePermission(request, "posts:write");
+  if (!actor) return unauthorized();
 
   try {
     const body = await request.json();
@@ -92,6 +96,12 @@ export async function PATCH(request: Request) {
        WHERE id = ?`,
       [payload.status, payload.status, payload.id],
     );
+    await appendAuditEvent(request, actor, {
+      action: "post.status_updated",
+      entityType: "blog_post",
+      entityId: payload.id,
+      metadata: { status: payload.status },
+    });
 
     return ok();
   } catch (error) {
@@ -104,15 +114,19 @@ export async function PATCH(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  if (!isAdminRequest(request)) {
-    return unauthorized();
-  }
+  const actor = await requirePermission(request, "posts:write");
+  if (!actor) return unauthorized();
 
   try {
     const { searchParams } = new URL(request.url);
     const payload = DeletePostSchema.parse({ id: searchParams.get("id") });
 
     await query("DELETE FROM blog_posts WHERE id = ?", [payload.id]);
+    await appendAuditEvent(request, actor, {
+      action: "post.deleted",
+      entityType: "blog_post",
+      entityId: payload.id,
+    });
 
     return ok();
   } catch (error) {
