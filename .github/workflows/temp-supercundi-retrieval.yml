@@ -1,15 +1,16 @@
 name: Temporary Supercundi retrieval
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  issues:
+    types: [opened]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   retrieve:
-    if: github.head_ref == 'temp-supercundi-docs-54879'
+    if: github.event_name == 'issues' && startsWith(github.event.issue.title, '[TEMP-SUPERCUNDI-54879]')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -31,26 +32,22 @@ jobs:
           out=Path('output'); html=(out/'root.html').read_text(errors='ignore')
           base='https://servicios.supersociedades.gov.co/barandaVirtual/'
           urls=[]
-          for pat in [r'<script[^>]+src=["\']([^"\']+)', r'<link[^>]+href=["\']([^"\']+\.js[^"\']*)']:
-              urls += [urljoin(base,x) for x in re.findall(pat,html,re.I)]
+          for src in re.findall(r'<script[^>]+src=["\']([^"\']+)',html,re.I): urls.append(urljoin(base,src))
           urls=list(dict.fromkeys(urls)); (out/'asset-urls.txt').write_text('\n'.join(urls))
           s=requests.Session(); s.verify=False
           for i,u in enumerate(urls):
-              try:
-                  r=s.get(u,timeout=120); (out/'assets'/f'{i:03d}.js').write_bytes(r.content)
+              try: (out/'assets'/f'{i:03d}.js').write_bytes(s.get(u,timeout=120).content)
               except Exception as e: (out/'asset-errors.txt').open('a').write(f'{u}: {e}\n')
           with (out/'snippets.txt').open('w') as f:
               for p in (out/'assets').glob('*'):
                   t=p.read_text(errors='ignore')
-                  for m in re.finditer(r'.{0,200}(?:radicaci|expediente|documento|descarg|api|service).{0,400}',t,re.I):
-                      f.write(f'\n---{p.name}---\n{m.group(0)}\n')
+                  for m in re.finditer(r'.{0,200}(?:radicaci|expediente|documento|descarg|api|service).{0,400}',t,re.I): f.write(f'\n---{p.name}---\n{m.group(0)}\n')
           PY
           npm init -y >/dev/null 2>&1
           npm install playwright@1.54.2 >/dev/null
           npx playwright install --with-deps chromium >/dev/null
           cat > capture.mjs <<'JS'
-          import {chromium} from 'playwright';
-          import fs from 'node:fs';
+          import {chromium} from 'playwright'; import fs from 'node:fs';
           const browser=await chromium.launch({headless:true});
           const context=await browser.newContext({acceptDownloads:true,ignoreHTTPSErrors:true});
           const page=await context.newPage(); const traffic=[];
@@ -59,11 +56,8 @@ jobs:
           page.on('console',m=>traffic.push({kind:'console',type:m.type(),text:m.text()}));
           await page.goto('https://servicios.supersociedades.gov.co/barandaVirtual/#!/app/radicaciones',{waitUntil:'networkidle',timeout:120000}).catch(e=>traffic.push({kind:'error',text:String(e)}));
           await page.waitForTimeout(10000);
-          fs.writeFileSync('output/page.html',await page.content());
-          fs.writeFileSync('output/text.txt',await page.locator('body').innerText().catch(()=>''));
-          fs.writeFileSync('output/traffic.json',JSON.stringify(traffic,null,2));
-          await page.screenshot({path:'output/page.png',fullPage:true});
-          await browser.close();
+          fs.writeFileSync('output/page.html',await page.content()); fs.writeFileSync('output/text.txt',await page.locator('body').innerText().catch(()=>'')); fs.writeFileSync('output/traffic.json',JSON.stringify(traffic,null,2));
+          await page.screenshot({path:'output/page.png',fullPage:true}); await browser.close();
           JS
           node capture.mjs || true
           file output/* > output/file-types.txt || true
