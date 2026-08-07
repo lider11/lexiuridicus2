@@ -20,7 +20,8 @@ import { CommentPanel } from "@/components/admin/CommentPanel";
 
 export function AdminDashboard() {
   const [adminToken, setAdminToken] = useState("");
-  const [tokenInput, setTokenInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const [clients, setClients] = useState<Client[]>([]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [comments, setComments] = useState<BlogComment[]>([]);
@@ -33,7 +34,7 @@ export function AdminDashboard() {
 
   const adminHeaders = {
     "Content-Type": "application/json",
-    "x-admin-token": adminToken,
+    Authorization: `Bearer ${adminToken}`,
   };
 
   async function loadData() {
@@ -45,11 +46,15 @@ export function AdminDashboard() {
     try {
       const [clientsResponse, postsResponse, commentsResponse] =
         await Promise.all([
-          fetch("/api/clients", { headers: { "x-admin-token": adminToken } }),
-          fetch("/api/posts?drafts=true", {
-            headers: { "x-admin-token": adminToken },
+          fetch("/api/clients", {
+            headers: { Authorization: `Bearer ${adminToken}` },
           }),
-          fetch("/api/comments", { headers: { "x-admin-token": adminToken } }),
+          fetch("/api/posts?drafts=true", {
+            headers: { Authorization: `Bearer ${adminToken}` },
+          }),
+          fetch("/api/comments", {
+            headers: { Authorization: `Bearer ${adminToken}` },
+          }),
         ]);
 
       if (
@@ -58,13 +63,11 @@ export function AdminDashboard() {
         )
       ) {
         setAdminToken("");
-        setTokenInput("");
+        setPasswordInput("");
         setClients([]);
         setPosts([]);
         setComments([]);
-        setError(
-          "Token invalido o vencido. Ingresa nuevamente el token de administrador.",
-        );
+        setError("La sesión venció o fue revocada. Ingresa nuevamente.");
         return;
       }
 
@@ -88,7 +91,7 @@ export function AdminDashboard() {
       setComments(commentsPayload.comments);
     } catch {
       setError(
-        "No se pudo cargar el panel. Verifica MySQL o el token de administrador.",
+        "No se pudo cargar el panel. Verifica la conexión o tus permisos.",
       );
     }
   }
@@ -99,16 +102,34 @@ export function AdminDashboard() {
     }
   }, [adminToken]);
 
-  function loginAdmin(event: FormEvent<HTMLFormElement>) {
+  async function loginAdmin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nextToken = tokenInput.trim();
-    setAdminToken(nextToken);
-    setTokenInput("");
+    setError("");
+    const response = await fetch("/api/admin/sessions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: emailInput,
+        password: passwordInput,
+        organization: "lex-iuridicus",
+      }),
+    });
+    if (!response.ok) {
+      setError("Credenciales inválidas o acceso temporalmente bloqueado.");
+      return;
+    }
+    const payload = await response.json();
+    setAdminToken(payload.token);
+    setPasswordInput("");
   }
 
-  function logoutAdmin() {
+  async function logoutAdmin() {
+    await fetch("/api/admin/sessions", {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${adminToken}` },
+    });
     setAdminToken("");
-    setTokenInput("");
+    setPasswordInput("");
     setClients([]);
     setPosts([]);
     setComments([]);
@@ -181,7 +202,7 @@ export function AdminDashboard() {
 
     const response = await fetch(`/api/posts?id=${id}`, {
       method: "DELETE",
-      headers: { "x-admin-token": adminToken },
+      headers: { Authorization: `Bearer ${adminToken}` },
     });
 
     if (!response.ok) {
@@ -234,7 +255,7 @@ export function AdminDashboard() {
 
     const response = await fetch(`/api/comments?id=${id}`, {
       method: "DELETE",
-      headers: { "x-admin-token": adminToken },
+      headers: { Authorization: `Bearer ${adminToken}` },
     });
 
     if (!response.ok) {
@@ -308,7 +329,7 @@ export function AdminDashboard() {
 
     const response = await fetch(`/api/clients?id=${id}`, {
       method: "DELETE",
-      headers: { "x-admin-token": adminToken },
+      headers: { Authorization: `Bearer ${adminToken}` },
     });
 
     if (!response.ok) {
@@ -421,8 +442,10 @@ export function AdminDashboard() {
     <div className="admin-workspace">
       {!adminToken ? (
         <AdminLogin
-          tokenInput={tokenInput}
-          onTokenInputChange={setTokenInput}
+          email={emailInput}
+          password={passwordInput}
+          onEmailChange={setEmailInput}
+          onPasswordChange={setPasswordInput}
           onSubmit={loginAdmin}
         />
       ) : null}
