@@ -36,6 +36,13 @@ export function AdminDashboard() {
     "x-admin-token": adminToken,
   };
 
+  function clearAdminSession() {
+    setAdminToken("");
+    setClients([]);
+    setPosts([]);
+    setComments([]);
+  }
+
   async function loadData() {
     if (!adminToken) {
       return;
@@ -57,11 +64,8 @@ export function AdminDashboard() {
           (response) => response.status === 401,
         )
       ) {
-        setAdminToken("");
+        clearAdminSession();
         setTokenInput("");
-        setClients([]);
-        setPosts([]);
-        setComments([]);
         setError(
           "Token invalido o vencido. Ingresa nuevamente el token de administrador.",
         );
@@ -101,17 +105,24 @@ export function AdminDashboard() {
 
   function loginAdmin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setError("");
+    setMessage("");
+
     const nextToken = tokenInput.trim();
+
+    if (!nextToken) {
+      clearAdminSession();
+      setError("Ingresa el token de administrador.");
+      return;
+    }
+
     setAdminToken(nextToken);
     setTokenInput("");
   }
 
   function logoutAdmin() {
-    setAdminToken("");
+    clearAdminSession();
     setTokenInput("");
-    setClients([]);
-    setPosts([]);
-    setComments([]);
   }
 
   async function createPost(event: FormEvent<HTMLFormElement>) {
